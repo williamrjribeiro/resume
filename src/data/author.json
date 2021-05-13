@@ -1,44 +1,60 @@
 {
-    "name": "Anna Quincey",
-    "occupation": "Front-End Developer",
-    "location": "Vienna, AT",
+    "name": "William R. J. Ribeiro",
+    "occupation": "Senior Full-stack Developer",
+    "location": "Lisbon, PT",
     "avatar": "avatar.jpg",
-    "pronouns": "she/her",
-    "email": "anna.quincey@gmail.com",
-    "telephone": "+01 23 456 789",
-    "website": "https://annaquincey.dev",
+    "pronouns": "he/him",
+    "email": "william.ribeiro@gmail.com",
+    "telephone": "+351 912 856 244",
+    "website": "https://www.williamrjribeiro.com",
     "skills": [
+        "Public speaking",
+        "Blogging",
+        "Coaching & Menthoring",
+        "UI Design",
+        "Automated testing",
+        "React",
+        "Kotlin",
+        "Go",
+        "NodeJS",
+        "Git",
         "HTML",
         "CSS",
-        "Javascript / ES6",
-        "UI Design",
-        "React",
-        "Git"
+        "Javascript / ES6"
     ],
     "languages": [
         {
-            "name": "English",
+            "name": "Portuguese",
             "level": "native"
         },
         {
-            "name": "German",
+            "name": "English",
             "level": "fluent"
         },
         {
-            "name": "French",
+            "name": "Spanish",
+            "level": "basic"
+        },
+        {
+            "name": "Dutch",
             "level": "basic"
         }
     ],
     "social": [
         {
             "name": "Github",
-            "user": "@annaquincey",
-            "url": "https://github.com/annaquincey"
+            "user": "@williamrjribeiro",
+            "url": "https://github.com/williamrjribeiro"
         },
         {
             "name": "LinkedIn",
-            "user": "AnnaQncy",
-            "url": "https://www.linkedin.com/in/annaquincey"
+            "user": "williamrjribeiro",
+            "url": "https://pt.linkedin.com/pub/william-r-j-ribeiro/47/186/568"
+        },
+        {
+            "name": "Twitter",
+            "user": "@bill_bsb",
+            "url": "https://twitter.com/bill_bsb"
         }
     ]
 }

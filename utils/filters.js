@@ -34,6 +34,10 @@ module.exports = {
         return str.replace(/(^\w+:|^)\/\//, '')
     },
 
+    stripWWW: function (str) {
+        return str.substring(4)
+    },
+
     base64file: function (file) {
         const filepath = path.join(__dirname, `../src/${file}`)
         const mimeType = mime.getType(file)
