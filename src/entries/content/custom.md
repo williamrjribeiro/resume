@@ -1,11 +1,6 @@
 ---
 tags: custom
-title: Indie apps
+title: Gap Year
 ---
 
-### Memoir
-May 2015 – Apr 2018, BlackBerry World
-It's a native Qt/Cascades BlackBerry 10 app made entirely by myself. From idea, design to coding. It's main purpose is to upload Remember app data to Microsoft OneNote. It's multithreaded and relies on OneNote REST API. Yes, it was made while I travelled the world.
-
-### Wappy
-Jan 2013 – Jan 2014, Github, BlackBerry WorldIt's a native Qt/Cascades BlackBerry 10 app for multi touch image editing. It was an independent side project for learning where I was the team leader and main developer. The app is open source and it can be found on Github.
+My wife and I decided to do something extraordinary to celebrate our 30th birthday: fulfil our dreams! Our Bucket List tooks all around the world on a journey that took 13 months, from february 2015 to march 2016. We did a lot of planning and preparations. It was a life chaning experience that taught us we can make our dreams come true. You can find some of our stories in our [travel blog](https://explorers3dot0.blogspot.com/).
