@@ -9,7 +9,6 @@
     "website": "https://www.williamrjribeiro.com",
     "skills": [
         "Public speaking",
-        "Blogging",
         "Coaching & Menthoring",
         "UI Design",
         "Automated testing",
@@ -20,7 +19,8 @@
         "Git",
         "HTML",
         "CSS",
-        "Javascript / ES6"
+        "Javascript / ES6",
+        "TypeScript"
     ],
     "languages": [
         {
