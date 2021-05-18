@@ -3,13 +3,17 @@
         "experience": "Work Experience",
         "education": "Education",
         "skills": "Skills",
-        "languages": "Languages"
+        "languages": "Languages",
+        "apps": "Indie Apps",
+        "volunteering": "Volunteering"
     },
     "labels": {
         "email": "Email",
         "telephone": "Telephone",
         "print": "Print Résumé",
         "present": "Present",
-        "lastUpdated": "Last updated"
+        "lastUpdated": "Last updated",
+        "sourceCode": "Source",
+        "appStore": "Store"
     }
 }

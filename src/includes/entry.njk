@@ -27,6 +27,20 @@
                     <span aria-hidden="true">&middot;</span>
                     <span class="p-location">{{ entry.data.location }}</span>
                 {% endif %}
+                {% if entry.data.sourceCodeUrl %}
+                    <a href="{{ entry.data.sourceCodeUrl }}" class="p-name u-url" target="_blank" rel="noopener noreferrer">{{ strings.labels.sourceCode }}</a>
+                {% endif %}
+                {% if entry.data.storeURL %}
+                    <a href="{{ entry.data.storeURL }}" class="p-name u-url" target="_blank" rel="noopener noreferrer">{{ strings.labels.appStore }}</a>
+                {% endif %}
+            </p>
+        {% endif %}
+
+        {% if entry.data.storeURL %}
+            <p class="entry__organization p-org h-card">
+                <a href="{{ entry.data.sourceCodeUrl }}" class="p-name u-url" target="_blank" rel="noopener noreferrer">{{ strings.labels.sourceCode }}</a>
+                <span aria-hidden="true">&middot;</span>
+                <a href="{{ entry.data.storeURL }}" class="p-name u-url" target="_blank" rel="noopener noreferrer">{{ strings.labels.appStore }}</a>
             </p>
         {% endif %}
     </div>
