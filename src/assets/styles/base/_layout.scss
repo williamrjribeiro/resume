@@ -13,13 +13,35 @@ body {
         grid-area: header;
         padding: $spacing-y 0;
     }
+
     .main {
         grid-area: main;
     }
+
     .sidebar {
         grid-area: sidebar;
         background-color: $primary-color;
         background-color: var(--primary-color, $primary-color);
+    }
+
+    .sidebar-effect {
+        background: linear-gradient(230deg,#a24bcf,var(--primary-color, $primary-color),#4bc5cf);
+        background-size: 300% 300%;
+        animation: MoveBG 60s ease infinite
+    }
+
+    @keyframes MoveBG {
+        0% {
+            background-position: 0% 84%
+        }
+    
+        50% {
+            background-position: 100% 16%
+        }
+    
+        100% {
+            background-position: 0% 84%
+        }
     }
     .footer {
         grid-area: footer;
