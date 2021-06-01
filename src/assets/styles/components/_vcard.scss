@@ -26,12 +26,13 @@
     &__pronouns {
         font-size: 1.125rem;
         font-family: $font-family-serif;
-        color: $gray;
+        color: $gray-dark;
     }
     &__link {
         display: flex;
         align-items: center;
-        margin-right: 1rem;
+        min-height: 3em;
+        margin-bottom: .25rem;
 
         @include hover-focus {
             text-decoration: none;
@@ -57,6 +58,8 @@
         }
         &__link {
             display: inline-flex;
+            margin-right: 1rem;
+            margin-bottom: 0;
         }
     }
 
