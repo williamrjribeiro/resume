@@ -1,6 +1,6 @@
 {
     "name": "William R. J. Ribeiro",
-    "occupation": "Senior Full-stack Developer",
+    "occupation": "Principal Software Engineer",
     "location": "Lisbon, PT",
     "avatar": "avatar.jpg",
     "pronouns": "he/him",
@@ -10,17 +10,18 @@
     "skills": [
         "Public speaking",
         "Coaching & Menthoring",
-        "UI Design",
-        "Automated testing",
+        "AWS",
         "React",
-        "Kotlin",
-        "Go",
+        "NextJS",
+        "TypeScript",
+        "Javascript / ES6",
         "NodeJS",
+        "Automated testing",
         "Git",
         "HTML",
         "CSS",
-        "Javascript / ES6",
-        "TypeScript"
+        "Kotlin",
+        "Go"
     ],
     "languages": [
         {
