@@ -1,6 +1,6 @@
 {
     "name": "resume",
-    "version": "2.2.2",
+    "version": "2.2.3",
     "description": "William R. J. Ribeiro's online resume/CV",
     "scripts": {
         "start": "npm run dev",
