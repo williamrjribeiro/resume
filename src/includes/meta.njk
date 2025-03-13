@@ -10,12 +10,18 @@
 <meta name="description" content="{{ pageDescription }}">
 <link rel="canonical" href="{{ absolutePageUrl }}">
 
+{# Reader Mode Support #}
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-title" content="{{ pageTitle }}">
+<meta name="application-name" content="{{ pageTitle }}">
+
 {# Open Graph #}
 <meta property="og:site_name" content="{{ pageTitle }}">
 <meta property="og:title" content="{{ pageTitle }}">
 <meta property="og:description" content="{{ pageDescription }}">
 <meta property="og:url" content="{{ absolutePageUrl }}">
 <meta property="og:locale" content="{{ meta.locale }}">
+<meta property="og:type" content="profile">
 <meta name="twitter:card" content="summary">
 {%- if author.avatar -%}
     {%- set avatarUrl -%}/assets/images/{{ author.avatar }}{% endset %}

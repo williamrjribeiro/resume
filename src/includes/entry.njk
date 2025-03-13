@@ -1,4 +1,4 @@
-<article class="entry">
+<article class="entry h-entry">
     <div class="entry__header">
         <h3 class="entry__title p-name">{{ entry.data.title }}</h3>
         
@@ -36,7 +36,7 @@
             </p>
         {% endif %}
 
-        {% if entry.data.storeURL %}
+        {% if entry.data.storeURL and entry.data.sourceCodeUrl %}
             <p class="entry__organization p-org h-card">
                 <a href="{{ entry.data.sourceCodeUrl }}" class="p-name u-url" target="_blank" rel="noopener noreferrer">{{ strings.labels.sourceCode }}</a>
                 <span aria-hidden="true">&middot;</span>
@@ -46,7 +46,7 @@
     </div>
 
     {% if entry.templateContent %}
-        <div class="entry__content p-summary">
+        <div class="entry__content p-summary e-content">
             {{ entry.templateContent | safe }}
         </div>
     {% endif %}

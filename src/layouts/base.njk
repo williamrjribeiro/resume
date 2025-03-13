@@ -10,7 +10,9 @@
 
     <div class="layout h-resume" role="document">
         {% include "header.njk" %}
-        {{ content | safe }}
+        <article class="h-entry">
+            {{ content | safe }}
+        </article>
         {% include "sidebar.njk" %}
         {% include "footer.njk" %}
     </div>
