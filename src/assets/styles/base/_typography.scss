@@ -33,15 +33,16 @@ p {
 }
 
 a {
-    text-decoration: none;
+    text-decoration: underline;
     text-decoration-skip-ink: auto;
     text-decoration-thickness: from-font;
 
-    color: $primary-color;
-    color: var(--primary-color, $primary-color);
+    color: darken($primary-color, 10%);
+    color: var(--primary-color, darken($primary-color, 10%));
 
     @include hover-focus {
         text-decoration: underline;
+        text-decoration-thickness: 0.125em;
     }
 }
 
