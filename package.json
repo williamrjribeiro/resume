@@ -1,7 +1,7 @@
 {
     "name": "resume",
-    "version": "2.2.1",
-    "description": "My online resume/CV",
+    "version": "2.2.2",
+    "description": "William R. J. Ribeiro's online resume/CV",
     "scripts": {
         "start": "npm run dev",
         "dev": "run-s clean eleventy:dev",
