@@ -6,7 +6,7 @@ location: Lisbon, PT
 start: 2021-09-01
 ---
 
-<b>Engineering Leadership:</b> Promoted to Principal Engineer and unofficial tech lead of one of the product teams. Besides my daily individual contributions to frontend and back-end codebases, I was also responsible for many other initiatives: defining engineering culture, technical stack decisions, maintaining excellence across teams, developing the technical parts of the hiring process, mentoring, and a few more things.
+<b>Engineering Leadership:</b> Promoted to Principal Engineer and unofficial tech lead of one of the product teams. Led cross-functional teams while establishing technical vision for secure web applications. Besides my daily individual contributions to frontend and back-end codebases, I was also responsible for many other initiatives: defining engineering culture, technical stack decisions, maintaining excellence across teams, developing the technical parts of the hiring process, mentoring, and a few more things.
 
 <b>AI-Powered Solutions:</b> Collaborated closely with AI researchers, ML specialists, and ETL data engineers to deliver user-facing applications leveraging complex AI capabilities. Integrated advanced audio processing systems for transcription, denoising, and translation across multiple languages, expanding into image processing solutions for humanitarian crisis response.
 
@@ -18,4 +18,4 @@ start: 2021-09-01
 
 <b>Modern Development Stack:</b> Migrated many repositories to modern JavaScrtipt developing tools like pnpm, Vite, and Vitest. Replaced a couple of GraphQL-based applications with NextJS, leveraging its server-side rendering and easy API integration between client and server.
 
-<b>Serverless Architecture:</b> Designed and implemented distributed serverless applications using AWS CDK, SST, Serverless framework, and Terraform using most AWS managed resources. This approach significantly reduced our operational burden and increased our speed and agility.
+<b>Serverless Architecture:</b> Designed and implemented distributed serverless applications using AWS CDK, SST, Serverless framework, and Terraform. This approach significantly reduced our operational burden, simplified compliance to security requirements, and increased our speed and agility.
