@@ -8,20 +8,22 @@
     "telephone": "+351 912 856 244",
     "website": "https://www.williamrjribeiro.com",
     "skills": [
-        "Public speaking",
+        "Leadership",
         "Coaching & Menthoring",
+        "Automated testing",
+        "Public speaking",
         "AWS",
         "React",
         "NextJS",
         "TypeScript",
         "Javascript / ES6",
         "NodeJS",
-        "Automated testing",
-        "Git",
         "HTML",
         "CSS",
+        "Git",
+        "Go",
         "Kotlin",
-        "Go"
+        "Java"
     ],
     "languages": [
         {
