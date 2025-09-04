@@ -2,7 +2,8 @@
     // GENERAL PRINT RESET
 
     @page {
-        margin: 1cm 3cm;
+        margin: 0.5cm 1.5cm;
+        size: A4;
     }
 
     :root {
@@ -13,7 +14,8 @@
     body {
         width: 100%;
         min-height: 100%;
-        font-size: 10px !important;
+        font-size: 11px !important;
+        line-height: 1.3 !important;
         overflow: visible;
     }
 
@@ -28,21 +30,98 @@
     p,
     h2,
     h3 {
-        orphans: 3;
-        widows: 3;
+        orphans: 2;
+        widows: 2;
     }
 
     h1,
     h2,
     h3 {
         page-break-after: avoid;
+        page-break-inside: avoid;
+    }
+
+    // HIDE PRE-TALKDESK WORK EXPERIENCE
+    // Target specific companies by their URLs (now that Tricode href is fixed)
+    
+    // Hide XpandIT (2016-2017)
+    .entrylist__item:has(.entry__organization .p-name[href*="xpand-it.com"]) {
+        display: none !important;
+    }
+    
+    // Hide Woodwing (2011-2014)
+    .entrylist__item:has(.entry__organization .p-name[href*="woodwing.com"]) {
+        display: none !important;
+    }
+    
+    // Hide Tricode (2009-2010) - now with correct URL
+    .entrylist__item:has(.entry__organization .p-name[href*="tricode"]) {
+        display: none !important;
+    }
+    
+    // Fallback selectors for better browser compatibility
+    .h-event:has(.p-org .p-name[href*="xpand-it.com"]),
+    .h-event:has(.p-org .p-name[href*="woodwing.com"]),
+    .h-event:has(.p-org .p-name[href*="tricode"]) {
+        display: none !important;
+    }
+    
+    // Additional fallback for browsers that don't support :has()
+    .h-event .p-org .p-name[href*="xpand-it.com"],
+    .h-event .p-org .p-name[href*="woodwing.com"],
+    .h-event .p-org .p-name[href*="tricode"] {
+        visibility: hidden !important;
     }
 
     // ELEMENTS
     // PRINT STYLE ADJUSTMENTS
 
     .layout {
-        display: block;
+        display: grid !important;
+        grid-template-columns: 45% 1fr;
+        gap: 2rem;
+        grid-template-areas:
+            'header introduction'
+            'experience experience'
+            'apps apps'
+            'three-col three-col';
+    }
+
+    article.h-entry,
+    main.main {
+        display: contents;
+    }
+
+    .header {
+        grid-area: header;
+    }
+
+    #section-introduction {
+        grid-area: introduction;
+        padding-top: 0;
+        margin-top: 0;
+        align-self: start;
+    }
+
+    #section-experience {
+        grid-area: experience;
+    }
+    #section-apps {
+        grid-area: apps;
+    }
+    .grid--3col__print {
+        grid-area: three-col;
+    }
+
+    .grid--3col__print {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.2rem;
+    }
+
+    .grid--3col__print > .section {
+        padding-top: 0;
+        padding-bottom: 0;
     }
 
     .container {
@@ -51,38 +130,276 @@
         padding-right: 0;
     }
 
-    .header {
-        padding: 0 !important;
-    }
-
-    .sidebar {
+    .sidebar,
+    .footer {
         display: none !important;
     }
 
-    .footer {
-        background: transparent !important;
+    // TYPOGRAPHY OPTIMIZATION
+    h1 {
+        font-size: 1.8rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    h2 {
+        font-size: 1.3rem !important;
+        margin-bottom: 0.7rem !important;
+        margin-top: 1.2rem !important;
+    }
+
+    h3 {
+        font-size: 1.1rem !important;
+        margin-bottom: 0.3rem !important;
+        margin-top: 0.5rem !important;
+    }
+
+    p {
+        margin-bottom: 0.4rem !important;
+        margin-top: 0.4rem !important;
+    }
+
+    // SECTION OPTIMIZATION
+    .section {
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.4rem !important;
+        page-break-inside: avoid;
+    }
+
+    #section-introduction,
+    #section-skills,
+    #section-languages,
+    #section-education {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        margin-top: 0 !important;
     }
 
     .section__title {
         border-color: #b5b5b5;
+        margin-bottom: 0.4rem !important;
+        padding-bottom: 0.2rem !important;
+        font-size: 1.2rem !important;
+        line-height: 1.1 !important;
+    }
+
+    // VCARD OPTIMIZATION
+    .vcard {
+        margin-bottom: 0.8rem !important;
+        display: flex !important;
+        align-items: flex-start !important;
+        gap: 1rem !important;
     }
 
     .vcard__avatar {
         position: static !important;
         transform: none !important;
-        margin: 0 2rem 0 0 !important;
-        border: 0;
+        margin: 0 !important;
+        border: 0 !important;
+        width: 50px !important;
+        height: 50px !important;
+        min-width: 50px !important;
+        min-height: 50px !important;
+        max-width: 50px !important;
+        max-height: 50px !important;
+        border-radius: 50% !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        aspect-ratio: 1 / 1 !important;
+        flex-shrink: 0 !important;
+        overflow: hidden !important;
     }
 
-    .entrylist::before,
-    .entrylist__item::before,
-    .bulletlist li::before {
-        color-adjust: exact !important;
+    .vcard__content {
+        margin-top: 0 !important;
+        flex: 1 !important;
+    }
+
+    .vcard__name {
+        font-size: 1.5rem !important;
+        margin-bottom: 0.2rem !important;
+        line-height: 1.1 !important;
+    }
+
+    .vcard__title {
+        font-size: 1rem !important;
+        margin-bottom: 0.3rem !important;
+        line-height: 1.2 !important;
+    }
+
+    .vcard__social,
+    .vcard__links {
+        font-size: 0.85rem !important;
+        line-height: 1.2 !important;
+    }
+
+    .vcard__link {
+        margin-bottom: 0.1rem !important;
+        display: inline-block !important;
+        margin-right: 0.8rem !important;
+    }
+
+    // ENTRY LIST OPTIMIZATION
+    .entrylist {
+        padding-left: 0.8rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    .entrylist::before {
+        left: 0.8rem !important;
+        top: 1.5rem !important;
+        background: linear-gradient(
+            to top,
+            rgba(#999, 0) 0%,
+            rgba(#999, 1) 60px,
+            rgba(#999, 1) 100%
+        ) !important;
+    }
+
+    .entrylist > * + * {
+        margin-top: 0.6rem !important;
+    }
+
+    .entrylist__item {
+        padding-left: 1rem !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    .entrylist__item::before {
+        top: 1.5rem !important;
+        width: 0.5rem !important;
+        height: 0.5rem !important;
+        left: 0 !important;
+        transform: translate(-50%, 0) !important;
+        print-color-adjust: exact !important;
         -webkit-print-color-adjust: exact !important;
     }
 
-    .entrylist__item,
+    // ENTRY OPTIMIZATION
     .entry {
         page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    .entry__header {
+        margin-bottom: 0.2rem !important;
+    }
+
+    .entry__time {
+        font-size: 0.7rem !important;
+        margin-bottom: 0.1rem !important;
+        letter-spacing: 0.05em !important;
+    }
+
+    .entry__title {
+        font-size: 1rem !important;
+        margin-bottom: 0.1rem !important;
+        line-height: 1.1 !important;
+    }
+
+    .entry__organization {
+        font-size: 0.9rem !important;
+        margin-bottom: 0.2rem !important;
+    }
+
+    .entry__content {
+        max-width: none !important;
+        font-size: 0.85rem !important;
+        line-height: 1.25 !important;
+    }
+
+    .entry__content p {
+        margin-bottom: 0.2rem !important;
+        margin-top: 0.2rem !important;
+    }
+
+    .entry__content h4 {
+        font-size: 0.9rem !important;
+        margin-bottom: 0.1rem !important;
+        margin-top: 0.3rem !important;
+        font-weight: 600 !important;
+    }
+
+    .entry__content b,
+    .entry__content strong {
+        font-weight: 600;
+    }
+
+    // 3-COLUMN LAYOUT FOR SKILLS/LANGUAGES/EDUCATION
+    .three-column-layout {
+        display: flex !important;
+        gap: 1.2rem !important;
+        margin-bottom: 0.5rem !important;
+        page-break-inside: avoid;
+    }
+
+    .three-column-layout .section {
+        flex: 1 !important;
+        padding-top: 0.3rem !important;
+        padding-bottom: 0.3rem !important;
+        margin: 0 !important;
+    }
+
+    // LEGACY GRID SUPPORT (in case three-column-layout isn't applied)
+    .grid {
+        display: flex !important;
+        gap: 1.2rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    .grid .section--half {
+        flex: 1 !important;
+        padding-top: 0.3rem !important;
+        padding-bottom: 0.3rem !important;
+    }
+
+    // BULLET LIST OPTIMIZATION
+    .bulletlist {
+        margin-bottom: 0.3rem !important;
+        padding-left: 0.8rem !important;
+    }
+
+    .bulletlist li {
+        margin-bottom: 0.1rem !important;
+        font-size: 0.8rem !important;
+        line-height: 1.2 !important;
+    }
+
+    .bulletlist li::before {
+        print-color-adjust: exact !important;
+        -webkit-print-color-adjust: exact !important;
+    }
+
+    // MARKDOWN CONTENT OPTIMIZATION
+    .markdown p {
+        margin-bottom: 0.4rem !important;
+        margin-top: 0.4rem !important;
+    }
+
+    .markdown h4 {
+        margin-bottom: 0.2rem !important;
+        margin-top: 0.5rem !important;
+    }
+
+    .markdown ul,
+    .markdown ol {
+        margin-bottom: 0.4rem !important;
+        margin-top: 0.4rem !important;
+        padding-left: 1.2rem !important;
+    }
+
+    .markdown li {
+        margin-bottom: 0.1rem !important;
+    }
+
+    // HIDE VOLUNTEERING AND GAP YEAR SECTIONS FOR BREVITY
+    #section-volunteering,
+    #section-custom {
+        display: none !important;
+    }
+
+    // ACTIONS/LINKS HIDDEN IN PRINT
+    .actions {
+        display: none !important;
     }
 }
