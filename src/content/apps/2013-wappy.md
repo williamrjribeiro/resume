@@ -6,4 +6,4 @@ start: 2013-01-01
 end: 2014-01-01
 ---
 
-It was an independent learning side project where some friends and I developed a native Qt/Cascades BlackBerry 10 app for multi touch image editing. I was the team leader and lead developer.
+It was an independent learning side project in which some friends and I developed a native Qt/Cascades BlackBerry 10 app for multi-touch image editing. I was the team leader and lead developer.

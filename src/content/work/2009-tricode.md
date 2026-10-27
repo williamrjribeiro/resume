@@ -8,4 +8,4 @@ start: 2009-08-01
 end: 2010-11-01
 ---
 
-Part of an Agile Scrum team, mainly a Java developer using technologies like GigaSpaces, Spring, Hibernate, JDBC, and Maven. Deployment, customization, and extension of JCR CMS (Jackrabbit, Hippo 7, Magnolia, Alfresco). I started as an AIESEC Technical Trainee but got a temporary position after my term as a trainee was over.
+Part of an Agile Scrum team, working mainly as a Java developer with technologies like GigaSpaces, Spring, Hibernate, JDBC, and Maven. Deployed, customized, and extended JCR content management systems (Jackrabbit, Hippo 7, Magnolia, Alfresco). I started as an AIESEC Technical Trainee and stayed on in a temporary position after my traineeship ended.

@@ -6,4 +6,4 @@ start: 2015-05-01
 end: 2018-04-01
 ---
 
-It's a native Qt/Cascades BlackBerry 10 app made entirely by myself. From idea, design to coding. It's main purpose is to upload Remember app data to Microsoft OneNote. It's multi-threaded and relies on OneNote REST API. Yes, it was made on the road while I travelled the world.
+A native Qt/Cascades BlackBerry 10 app that I made entirely by myself, from the idea and design to the code. Its main purpose is to upload Remember app data to Microsoft OneNote. It is multi-threaded and relies on the OneNote REST API. Yes, I made it on the road while I traveled the world.

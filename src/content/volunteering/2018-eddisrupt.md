@@ -7,4 +7,4 @@ start: 2018-03-01
 end: 2018-04-01
 ---
 
-Teaching the basics of web development with HTML, CSS, JavaScript, and their best practices. Also coached students in applying for job positions.
+Taught the basics of web development (HTML, CSS and JavaScript) and its best practices. Also coached students on applying for jobs.

@@ -8,8 +8,10 @@ start: 2011-02-01
 end: 2014-04-01
 ---
 
-In my 3 years in the company, I had 3 different roles: **Adobe Air developer** where we developed a mobile application for the Blackberry Playbook tablet.
+In my three years at the company, I had three different roles:
 
-**Customer Support Engineer** where we helped our customers migrate their digital publications from our platform to Adobes.
+**Adobe AIR Developer:** developed a mobile application for the BlackBerry PlayBook tablet.
 
-**Mobile Web Developer specialist** where we tackled all things web development for mobile devices. I also gave customers and partners training on how to develop performant interactive widgets and interactive single-page applications done with web technologies. Mainly working with DOJO, SAS & Web Canvas.
+**Customer Support Engineer:** helped customers migrate their digital publications from our platform to Adobe's.
+
+**Mobile Web Developer Specialist:** tackled all things web development for mobile devices. I also trained customers and partners on building performant interactive widgets and single-page applications with web technologies, mainly Dojo, Sass, and Canvas.
