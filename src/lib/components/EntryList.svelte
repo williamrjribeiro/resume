@@ -21,7 +21,7 @@
       class={[
         "h-event",
         property,
-        "relative pl-8 before:absolute before:top-9 before:left-0 before:size-2.5 before:-translate-x-1/2 before:rounded-full before:bg-secondary not-first:mt-8 print:pl-4 print:before:top-6 print:before:size-2 print:not-first:mt-2.5",
+        "relative pl-8 not-first:mt-8 before:absolute before:top-9 before:left-0 before:size-2.5 before:-translate-x-1/2 before:rounded-full before:bg-secondary print:pl-4 print:not-first:mt-2.5 print:before:top-6 print:before:size-2",
         entry.printHidden && "print:hidden",
       ]}
     >

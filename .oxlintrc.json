@@ -6,7 +6,10 @@
     "suspicious": "error",
     "perf": "error"
   },
-  "ignorePatterns": ["repos/**", "**/dist/**", "**/coverage/**", "**/storybook-static/**"],
+  // `svelte` predefines the runes ($props, $state, $derived, ...) and `browser` the DOM globals, so that
+  // rules which look for undefined names work in .svelte files, which Oxlint lints script block by script block.
+  "env": { "builtin": true, "browser": true, "svelte": true },
+  "ignorePatterns": ["repos/**", "**/dist/**", "**/coverage/**", "build/**", ".svelte-kit/**"],
   "rules": {
     "typescript/consistent-type-imports": ["error", { "fixStyle": "inline-type-imports" }],
     "typescript/no-import-type-side-effects": "error",
@@ -26,6 +29,12 @@
     "unicorn/consistent-function-scoping": "off"
   },
   "overrides": [
+    {
+      // TypeScript already reports undefined names in .ts files (`bun check`); Oxlint is the only
+      // linter that reads the script blocks of .svelte files.
+      "files": ["**/*.svelte"],
+      "rules": { "eslint/no-undef": "error" }
+    },
     {
       // Test suites and scripts report to stdout.
       "files": ["**/test/**", "**/scripts/**", "**/cli/**"],

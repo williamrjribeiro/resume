@@ -13,7 +13,9 @@
 
   // The address is written as HTML entities, which Svelte would escape again, so the link is HTML.
   // Everything in it but the entities and the icon is escaped by `emailLinkHtml`.
-  const html = $derived(emailLinkHtml({ email, label, icon: iconSvg("email"), showText, className }));
+  const html = $derived(
+    emailLinkHtml({ email, label, icon: iconSvg("email"), showText, className }),
+  );
 </script>
 
 {@html html}

@@ -9,7 +9,7 @@
   <meta name="robots" content="noindex" />
 </svelte:head>
 
-<main class="gutter flex min-h-screen flex-col items-start justify-center gap-4 py-16">
+<main class="flex min-h-screen gutter flex-col items-start justify-center gap-4 py-16">
   <h1>{page.status}</h1>
   <p class="text-xl font-light">
     {page.status === 404 ? "There is nothing at this address." : "Something went wrong."}

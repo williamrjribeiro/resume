@@ -35,7 +35,12 @@ bunx @sveltejs/mcp svelte-autofixer src/lib/components/Entry.svelte --svelte-ver
   `svelte-check` needs the `typescript` package, which this repository does not depend on (type checking is
   `bun check`, which cannot read `.svelte`). CI runs it before every deploy.
 - `bun run verify` does not run it, so the pre-commit hook stays fast and works offline.
-- Oxfmt and Oxlint skip `.svelte` files. Keep their formatting by hand, in the style of the files around them.
+- Oxfmt formats `.svelte` files (`"svelte": true` in `.oxfmtrc.json`, which needs the `svelte` package at runtime)
+  and sorts their Tailwind classes against `src/styles.css` (`sortTailwindcss`). Run `bun run fmt` after editing
+  them; `fmt:check` fails on unformatted ones.
+- Oxlint lints the script blocks of `.svelte` files, not their markup. `env` in `.oxlintrc.json` predefines the
+  runes (`svelte`) and the DOM (`browser`), and `no-undef` is on for `.svelte` files only. Markup, accessibility
+  and unused CSS are `svelte-check`'s job.
 
 ## Conventions the code follows
 

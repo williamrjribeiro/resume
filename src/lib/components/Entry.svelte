@@ -68,7 +68,9 @@
   </div>
 
   {#if entry.html}
-    <div class="p-summary e-content markdown max-w-[60ch] print:max-w-none print:text-[0.85rem] print:leading-tight">
+    <div
+      class="p-summary e-content markdown max-w-[60ch] print:max-w-none print:text-[0.85rem] print:leading-tight"
+    >
       <!-- The Markdown comes from src/content, which the site owner writes. -->
       {@html entry.html}
     </div>

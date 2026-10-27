@@ -41,7 +41,9 @@
       <em class="p-gender-identity ml-2 font-serif text-lg text-gray-dark">({author.pronouns})</em>
     </div>
 
-    <p class="mb-4 max-w-[60ch] text-xl leading-normal font-light md:text-2xl print:mb-1 print:text-base">
+    <p
+      class="mb-4 max-w-[60ch] text-xl leading-normal font-light md:text-2xl print:mb-1 print:text-base"
+    >
       <span class="p-job-title">{author.occupation}</span>
       <span aria-hidden="true">&middot;</span>
       <span class="p-adr h-adr">

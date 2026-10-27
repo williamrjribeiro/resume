@@ -39,14 +39,24 @@
   <!-- The résumé itself (https://microformats.org/wiki/h-resume); the person is the h-card above. -->
   <main class="h-resume lg:col-start-2 lg:row-start-2 print:contents">
     <div class="gutter print:contents">
-      <Section id="section-introduction" title={resume.introduction.title} class="print:self-start print:py-0">
-        <div class="lead p-summary e-content markdown max-w-[60ch] text-xl leading-normal font-light md:text-2xl print:text-base">
+      <Section
+        id="section-introduction"
+        title={resume.introduction.title}
+        class="print:self-start print:py-0"
+      >
+        <div
+          class="lead p-summary e-content markdown max-w-[60ch] text-xl leading-normal font-light md:text-2xl print:text-base"
+        >
           <!-- The Markdown comes from src/content, which the site owner writes. -->
           {@html resume.introduction.html}
         </div>
       </Section>
 
-      <Section id="section-experience" title={strings.titles.experience} class="print:col-span-2 print:break-inside-auto">
+      <Section
+        id="section-experience"
+        title={strings.titles.experience}
+        class="print:col-span-2 print:break-inside-auto"
+      >
         <EntryList entries={resume.entries.work} property="p-experience" />
       </Section>
 
@@ -54,8 +64,14 @@
         <EntryList entries={resume.entries.apps} property="p-apps" />
       </Section>
 
-      <div class="grid grid-cols-2 gap-x-16 break-inside-avoid print:col-span-2 print:grid-cols-3 print:gap-5">
-        <Section id="section-skills" title={strings.titles.skills} class="col-span-2 md:col-span-1 print:col-span-1 print:py-0">
+      <div
+        class="grid break-inside-avoid grid-cols-2 gap-x-16 print:col-span-2 print:grid-cols-3 print:gap-5"
+      >
+        <Section
+          id="section-skills"
+          title={strings.titles.skills}
+          class="col-span-2 md:col-span-1 print:col-span-1 print:py-0"
+        >
           <ul class="bulletlist print:pl-3">
             {#each author.skills as skill (skill)}
               <li class="p-skill print:mb-px print:text-[0.8rem] print:leading-tight">{skill}</li>
@@ -63,7 +79,11 @@
           </ul>
         </Section>
 
-        <Section id="section-languages" title={strings.titles.languages} class="col-span-2 md:col-span-1 print:col-span-1 print:py-0">
+        <Section
+          id="section-languages"
+          title={strings.titles.languages}
+          class="col-span-2 md:col-span-1 print:col-span-1 print:py-0"
+        >
           <ul class="bulletlist print:pl-3">
             {#each author.languages as language (language.name)}
               <li class="p-skill print:mb-px print:text-[0.8rem] print:leading-tight">
@@ -73,7 +93,11 @@
           </ul>
         </Section>
 
-        <Section id="section-education" title={strings.titles.education} class="col-span-2 md:col-span-1 print:col-span-1 print:py-0">
+        <Section
+          id="section-education"
+          title={strings.titles.education}
+          class="col-span-2 md:col-span-1 print:col-span-1 print:py-0"
+        >
           <EntryList entries={resume.entries.education} property="p-education" />
         </Section>
       </div>
