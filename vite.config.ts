@@ -12,14 +12,15 @@ export default defineConfig({
     tailwindcss(),
     sveltekit({
       compilerOptions: { runes: true },
-      adapter: adapter({ pages: "build", assets: "build", strict: true }),
+      // GitHub Pages shows 404.html for addresses that are not files, so the 404 page is the app's own.
+      adapter: adapter({ pages: "build", assets: "build", fallback: "404.html", strict: true }),
       paths: { base: base as "" | `/${string}`, relative: true },
       prerender: { handleHttpError: "fail", handleMissingId: "fail" },
+      // One small style sheet and no navigation between pages, so inlining it saves a request on the
+      // way to the first paint and loses no caching.
+      inlineStyleThreshold: 50_000,
+      // The page never navigates, so there is nothing to refresh when a new version is deployed.
+      version: { pollInterval: 0 },
     }),
   ],
-  define: {
-    // Shown in the footer as "Last updated". Baked in at build time so the prerendered HTML and
-    // the hydrated page agree.
-    SITE_BUILD_TIME: JSON.stringify(new Date().toISOString()),
-  },
 });

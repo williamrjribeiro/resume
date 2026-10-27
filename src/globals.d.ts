@@ -1,5 +1,9 @@
 // Side-effect style sheet imports are handled by Vite.
 declare module "*.css";
 
-/** The ISO timestamp of the build, replaced by Vite (see vite.config.ts). */
-declare const SITE_BUILD_TIME: string;
+// `bun check` cannot read `.svelte` files, so tests see them as components. `svelte-check` reads the real ones.
+declare module "*.svelte" {
+  import type { Component } from "svelte";
+  const component: Component<Record<string, unknown>>;
+  export default component;
+}

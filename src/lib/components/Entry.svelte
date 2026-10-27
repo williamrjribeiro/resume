@@ -3,7 +3,11 @@
   import { formatMonthYear } from "#lib/format.ts";
   import { strings } from "#lib/data/site.ts";
 
-  let { entry }: { entry: Entry } = $props();
+  interface Props {
+    entry: Entry;
+  }
+
+  let { entry }: Props = $props();
   const hasLinks = $derived(entry.sourceCodeUrl !== undefined || entry.storeUrl !== undefined);
 </script>
 

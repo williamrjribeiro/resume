@@ -1,23 +1,19 @@
 <script lang="ts">
-  import { obfuscate } from "#lib/format.ts";
-  import { iconSvg } from "#lib/icons.ts";
+  import { emailLinkHtml } from "#lib/email-link.ts";
+  import { iconSvg } from "#lib/icon-lookup.ts";
 
-  let {
-    email,
-    label,
-    showText = false,
-    class: className = "",
-  }: { email: string; label: string; showText?: boolean; class?: string } = $props();
+  interface Props {
+    email: string;
+    label: string;
+    showText?: boolean;
+    class?: string;
+  }
 
-  // The address is written as HTML entities in both the link and its text, which Svelte would escape
-  // again, so the whole link is rendered as HTML.
-  const encoded = $derived(obfuscate(email));
-  const html = $derived(
-    `<a class="${className}" href="mailto:${encoded}"${showText ? "" : ` aria-label="${label}"`}>` +
-      (iconSvg("email") ?? "") +
-      (showText ? `<span>${encoded}</span>` : "") +
-      "</a>",
-  );
+  let { email, label, showText = false, class: className = "" }: Props = $props();
+
+  // The address is written as HTML entities, which Svelte would escape again, so the link is HTML.
+  // Everything in it but the entities and the icon is escaped by `emailLinkHtml`.
+  const html = $derived(emailLinkHtml({ email, label, icon: iconSvg("email"), showText, className }));
 </script>
 
 {@html html}

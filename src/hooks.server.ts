@@ -4,6 +4,6 @@ import type { Handle } from "@sveltejs/kit/hooks";
 // Only the woff2 file: every browser that runs this site reads it, so the woff fallback stays unfetched.
 export const handle: Handle = ({ event, resolve }) =>
   resolve(event, {
-    preload: ({ type, path }) =>
-      type === "js" || type === "css" || (type === "font" && path.endsWith(".woff2")),
+    preload: (input) =>
+      input.type === "font" ? input.filename.endsWith(".woff2") : input.type !== "asset",
   });

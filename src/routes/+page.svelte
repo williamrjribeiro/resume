@@ -91,5 +91,5 @@
   </main>
 
   <Sidebar />
-  <Footer />
+  <Footer builtAt={data.builtAt} />
 </div>

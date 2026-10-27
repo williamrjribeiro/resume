@@ -10,7 +10,8 @@
     "flex min-h-[3em] items-center gap-0.5 md:mr-4 md:inline-flex print:mr-3 print:inline-flex print:min-h-0";
 
   function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    // Smooth, unless the visitor asks for less motion: see `scroll-behavior` in src/styles.css.
+    window.scrollTo({ top: 0 });
   }
 </script>
 
