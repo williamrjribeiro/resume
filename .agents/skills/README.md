@@ -7,6 +7,7 @@ Canonical Agent Skills for this repository. Claude Code loads the same trees via
 | Skill | Purpose |
 | --- | --- |
 | [`repo-conventions`](./repo-conventions/SKILL.md) | Bun tooling, quality gates, hooks, commits, `bun check` |
+| [`svelte`](./svelte/SKILL.md) | Svelte 5 and SvelteKit 3: official docs and autofixer through `bunx`, `check:svelte`, conventions, component tests |
 | [`bdd-bun-test`](./bdd-bun-test/SKILL.md) | BDD + `bun:test` rules |
 | [`browser-verification`](./browser-verification/SKILL.md) | Checking pages in a browser with agent-browser only |
 

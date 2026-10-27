@@ -16,6 +16,7 @@ Bun-based repository for William's résumé: a static Svelte 5 + Tailwind CSS 4 
 
 | Topic | Skill |
 | --- | --- |
+| Svelte / SvelteKit code | `svelte` |
 | Tests (BDD + `bun:test`) | `bdd-bun-test` |
 | A web page in a browser | `agent-browser` |
 
@@ -24,6 +25,7 @@ Bun-based repository for William's résumé: a static Svelte 5 + Tailwind CSS 4 
 - `apps/*` — applications (none yet)
 - `packages/*` — shared libraries (none yet)
 - `scripts/` — repository scripts and their tests
+- `test/` — test setup (`setup.ts`, preloaded by `bunfig.toml`) and `test/support/` helpers that export functions. Tests sit next to the code as `*.test.ts`
 - `src/` — the site: `routes/` (the one page), `lib/` (components, data, content loader; imported as `#lib/...`), `content/` (the résumé's Markdown), `assets/` (fonts, icons), `styles.css` (Tailwind CSS entry; configuration lives in CSS, there is no `tailwind.config.js`)
 - `static/` — files served as they are (avatar, favicons, manifest, robots.txt)
 - `vite.config.ts` — Vite, SvelteKit and Tailwind configuration (SvelteKit 3 has no `svelte.config.js`)
@@ -46,6 +48,7 @@ bun run test                     # bun test
 bun run md:check / md:fmt / md:fmt:check   # rumdl
 bun run dev / build / preview    # Vite dev server; static site in build/
 bun run check:hcard              # the built page must carry the author's h-card
+bun run check:svelte             # svelte-check over the .svelte files (through bunx, see the svelte skill)
 bun run prd                      # build, serve build/ over HTTPS
 bun run serve:https              # serve SERVE_DIR (default dist) over HTTPS
 bun run certs / certs:clean      # local HTTPS certificate in .certs/
@@ -58,7 +61,7 @@ bun run certs / certs:clean      # local HTTPS certificate in .certs/
 
 ## Type checking
 
-Type checking is `bun check` (it embeds TypeScript), not `tsc`. There is no `typescript` package and none may be added, so `svelte-check` (which needs it) is not used: `.svelte` files are compiled by Svelte, which strips their types without checking them. Keep logic in `.ts` modules, where `bun check` covers it. A root package script named `check` would shadow `bun check`; use `bun --check` then. Extend the root `tsconfig.json`. `exactOptionalPropertyTypes` is on.
+Type checking is `bun check` (it embeds TypeScript), not `tsc`. There is no `typescript` package and none may be added. `bun check` cannot read `.svelte` files, so `bun run check:svelte` runs `svelte-check` at a pinned version through `bunx` instead (the one use of TypeScript outside Bun). Keep logic in `.ts` modules, where `bun check` covers it. A root package script named `check` would shadow `bun check`; use `bun --check` then. Extend the root `tsconfig.json`. `exactOptionalPropertyTypes` is on.
 
 ## Local HTTPS
 

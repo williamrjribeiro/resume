@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version-file: .bun-version
@@ -36,6 +36,9 @@ jobs:
       # The build is the site that would be deployed: its markup must carry the author's h-card.
       - name: Check the h-card
         run: bun run check:hcard
+      # Types and accessibility warnings in the .svelte files, which `bun check` cannot read.
+      - name: Check the Svelte files
+        run: bun run check:svelte
 
   # The commit-msg hook, for contributors who do not run it. It needs the
   # history of the pull request and no dependencies, so it runs beside `check`.
@@ -46,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - uses: oven-sh/setup-bun@v2

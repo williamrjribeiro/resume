@@ -14,6 +14,7 @@ bun run dev        # http://localhost:5173 with live reload
 bun run build      # the static site, in build/
 bun run preview    # serve build/
 bun run verify     # format, lint, Markdown, type check and tests
+bun run check:svelte  # svelte-check: types and accessibility in the .svelte files
 ```
 
 The tooling comes from the `bun-agentic-starter` template; see [AGENTS.md](./AGENTS.md) and the skills in [.agents/skills](./.agents/skills/README.md).
@@ -42,7 +43,7 @@ One-time repository settings:
 - **Settings → Pages → Source** must be **GitHub Actions**.
 - **Settings → Environments → github-pages → Deployment branches and tags** must allow the tag pattern `v*.*.*` (the default only allows the default branch).
 
-The site is served from `/resume/`; the workflow sets `BASE_PATH` from the repository name. Serving it from a custom domain means leaving `BASE_PATH` empty and updating `site.url` and `author.website`.
+The site is served from `/resume/`; the workflow takes `BASE_PATH` from the Pages configuration, so it is empty on a custom domain. Moving to one also means updating `site.url` and `author.website`.
 
 ## Credits
 
