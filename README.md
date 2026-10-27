@@ -1,14 +1,53 @@
 # WRJR Resume
 
-**Commands**
+[William R. J. Ribeiro](https://williamrjribeiro.github.io/resume/)'s online résumé: a static website built with [Svelte 5](https://svelte.dev) and [Tailwind CSS 4](https://tailwindcss.com), published to GitHub Pages by GitHub Actions.
 
--   Run `npm start` for a development server and live reloading
--   Run `npm run build` to generate a production build
+The markup carries the [h-card microformat](https://microformats.org/wiki/h-card), so tools can read the contact details straight from the page. CI checks that it stays that way.
 
-## Updating GiHub Pages
+## Develop
 
-Just create a new release with a tag using GitHub Releases. A GitHub Action will do everything else.
+Install [Bun](https://bun.com/docs/installation) at the version in `.bun-version`, then:
+
+```bash
+bun install
+bun run dev        # http://localhost:5173 with live reload
+bun run build      # the static site, in build/
+bun run preview    # serve build/
+bun run verify     # format, lint, Markdown, type check and tests
+```
+
+The tooling comes from the `bun-agentic-starter` template; see [AGENTS.md](./AGENTS.md) and the skills in [.agents/skills](./.agents/skills/README.md).
+
+## Change the content
+
+- Text and dates live in Markdown files with a YAML header in [src/content](./src/content): `work/`, `apps/`, `education/` and `volunteering/` hold one file per entry, `introduction.md` and `gap-year.md` are the free-form sections. Entries are sorted by `start`, newest first. `printHidden: true` leaves an entry out of the printed résumé.
+- The name, contact details, skills, languages and social links are in [src/lib/data/author.ts](./src/lib/data/author.ts); the site URL and colours are in [src/lib/data/site.ts](./src/lib/data/site.ts).
+- The page is built from the components in [src/lib/components](./src/lib/components), styled with Tailwind utilities. The theme (colours, fonts, breakpoints) and the print layout are in [src/styles.css](./src/styles.css).
+
+## Markup
+
+- The header is a top-level `h-card` with `u-url` equal to `u-uid`, which is how parsers find the representative h-card of the page. Social links are `rel="me"`.
+- The résumé itself is an `h-resume` whose jobs, degrees and apps are `h-event` items, each with its organisation as a nested `p-org h-card`.
+
+## Release
+
+Pages are deployed from version tags, never from branches:
+
+1. Set `version` in `package.json` (the deploy fails if it differs from the tag) and commit.
+2. Create a release with a tag such as `v3.0.0` on GitHub, or run `git tag v3.0.0 && git push origin v3.0.0`.
+3. The [Deploy](./.github/workflows/deploy.yml) workflow verifies and builds the site, publishes it to GitHub Pages and, when the tag came from `git push`, creates the GitHub Release with generated notes.
+
+One-time repository settings:
+
+- **Settings → Pages → Source** must be **GitHub Actions**.
+- **Settings → Environments → github-pages → Deployment branches and tags** must allow the tag pattern `v*.*.*` (the default only allows the default branch).
+
+The site is served from `/resume/`; the workflow sets `BASE_PATH` from the repository name. Serving it from a custom domain means leaving `BASE_PATH` empty and updating `site.url` and `author.website`.
 
 ## Credits
 
-Thanks to [Max Böck](https://github.com/maxboeck/resume) for the original source code.
+Thanks to [Max Böck](https://github.com/maxboeck/resume) for the design and the original source code of version 2.
+
+## License
+
+[MIT](./LICENSE)

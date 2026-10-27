@@ -1,0 +1,78 @@
+name: Deploy
+
+# Pushing a version tag (v3.0.0) publishes the site to GitHub Pages and creates the GitHub Release
+# for the tag. Creating a release in the GitHub UI pushes the tag too, so that works as well.
+# Run it by hand from the Actions tab to redeploy the current commit.
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Deployments run one at a time, and a running one is never cancelled halfway.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+      - name: Check the tag matches the version in package.json
+        if: startsWith(github.ref, 'refs/tags/')
+        run: test "v$(bun -p 'require("./package.json").version')" = "$GITHUB_REF_NAME"
+      - name: Install
+        run: bun install --frozen-lockfile
+      - name: Verify
+        run: bun run verify
+      - name: Build
+        run: bun run build
+        env:
+          # https://<user>.github.io/<repository>/
+          BASE_PATH: /${{ github.event.repository.name }}
+      - name: Check the h-card
+        run: bun run check:hcard
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build
+
+  deploy:
+    name: deploy
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+  release:
+    name: release
+    needs: deploy
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      # A release created in the GitHub UI exists already; one made by `git push --tags` does not.
+      - name: Create the GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: gh release view "$GITHUB_REF_NAME" || gh release create "$GITHUB_REF_NAME" --verify-tag --title "$GITHUB_REF_NAME" --generate-notes
