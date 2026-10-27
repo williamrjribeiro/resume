@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://json.schemastore.org/lefthook.json
+#
+# Git hooks (https://lefthook.dev). `bun install` runs scripts/install-git-hooks.ts
+# (`prepare`) so Lefthook lands in `.git/hooks`. That step skips when CI=true
+# (GitHub Actions). Some agent hosts keep core.hooksPath on
+# ~/.cursor/agent-hooks/<id>/ and chain Lefthook via .cursor-original-hooks-path.
+# Never bypass with --no-verify or LEFTHOOK=0; fix the failure instead.
+
+pre-commit:
+  jobs:
+    # The gates that CI runs, in parallel. Formatting is checked, never fixed.
+    - name: check
+      # Git exports GIT_DIR / GIT_INDEX_FILE to hooks. Drop them so test suites that
+      # create throwaway repos (scripts/*.test.ts) cannot write to this repository.
+      run: env -u GIT_DIR -u GIT_INDEX_FILE -u GIT_WORK_TREE -u GIT_PREFIX -u GIT_COMMON_DIR bun run verify
+      fail_text: "Run `bun run fmt` and `bun run md:fmt` to fix formatting, stage the result, and fix any other failure above."
+
+commit-msg:
+  jobs:
+    - name: conventional commit
+      run: bun scripts/check-commit-subject.ts --file {1}
+      fail_text: "Use a Conventional Commits subject, e.g. `feat(api): add X`."

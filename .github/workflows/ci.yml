@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+# A new push to a pull request cancels the run it makes obsolete.
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  # Every gate that the pre-commit hook runs (format, lint, Markdown, typecheck
+  # and tests) and the production build. Bun runs them in parallel, waits for
+  # all of them and reports every failure, not only the first.
+  check:
+    name: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+      - name: Check the Bun version
+        run: test "$(bun --version)" = "$(cat .bun-version)"
+      - name: Install
+        run: bun install --frozen-lockfile
+      - name: Check
+        run: bun run ci
+      # The build is the site that would be deployed: its markup must carry the author's h-card.
+      - name: Check the h-card
+        run: bun run check:hcard
+
+  # The commit-msg hook, for contributors who do not run it. It needs the
+  # history of the pull request and no dependencies, so it runs beside `check`.
+  # A pull request is checked out as a merge commit of its own; the script skips it.
+  commits:
+    name: commit subjects
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+      - name: Check commit subjects
+        run: bun scripts/check-commit-subject.ts --range "origin/${{ github.base_ref || 'master' }}..HEAD"

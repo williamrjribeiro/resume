@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "ignorePatterns": [
+    "repos/**",
+    "**/*.md",
+    "**/*.toml",
+    "**/*.html",
+    "bun.lock",
+    ".beads/**",
+    "**/*.yml",
+    "**/*.yaml",
+    "**/dist/**",
+    "**/storybook-static/**"
+  ]
+}

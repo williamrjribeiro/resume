@@ -1,0 +1,49 @@
+# rumdl — Markdown format + lint (GFM). No Prettier/Oxfmt.
+# Gates root and app READMEs plus docs, packages, and skills.
+
+[global]
+flavor = "gfm"
+include = [
+    "README.md",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "apps/**/*.md",
+    "docs/**/*.md",
+    "packages/**/*.md",
+    ".agents/skills/**/*.md",
+]
+exclude = [
+    ".git",
+    "node_modules",
+    "dist",
+    "out",
+    ".beads",
+    "repos",
+    # Vendored from vercel-labs/agent-browser v0.38.2 — do not reformat upstream.
+    ".agents/skills/agent-browser",
+]
+respect-gitignore = true
+disable = [
+    # Long URLs and prose lines exceed 80.
+    "MD013",
+    # Do not force ordered-list renumbering.
+    "MD029",
+]
+
+[MD003]
+style = "atx"
+
+[MD004]
+style = "dash"
+
+[MD046]
+style = "fenced"
+
+[MD048]
+style = "backtick"
+
+[MD049]
+style = "asterisk"
+
+[MD050]
+style = "asterisk"

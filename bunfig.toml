@@ -1,0 +1,3 @@
+[test]
+# Reference clones in repos/ ship their own test suites.
+pathIgnorePatterns = ["repos/**"]

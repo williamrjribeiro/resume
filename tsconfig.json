@@ -1,0 +1,44 @@
+{
+  // SvelteKit supplies the path aliases and `$app/*` types; `svelte-kit sync` generates them.
+  "extends": "$app/tsconfig",
+  "compilerOptions": {
+    // Environment setup & latest features
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "target": "ESNext",
+    "module": "Preserve",
+    "moduleDetection": "force",
+    "allowJs": true,
+    "types": ["bun", "vite/client", "$app/types"],
+
+    // Bundler mode
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "noEmit": true,
+
+    // Best practices
+    "strict": true,
+    "skipLibCheck": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "exactOptionalPropertyTypes": true,
+
+    // Some stricter flags (disabled by default)
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noPropertyAccessFromIndexSignature": false
+  },
+  // What the root project owns, so a bare `bun check` here checks the repo's scripts and the site's
+  // TypeScript. `.svelte` files are compiled by Svelte, which strips their types without checking them.
+  // Apps and packages are projects of their own (they extend this file but set their own `include`).
+  "include": [
+    "scripts/*.ts",
+    "src/**/*.ts",
+    "vite.config.ts",
+    ".svelte-kit/ambient.d.ts",
+    ".svelte-kit/non-ambient.d.ts"
+  ],
+  // Reference sources are type-checked by their own projects.
+  "exclude": ["node_modules", "repos", "**/dist", "build"]
+}

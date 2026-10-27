@@ -1,0 +1,9 @@
+{
+  // repos/ holds read-only reference sources (see repos.json): keep them out of
+  // auto-imports, search and file watching. Cursor reads this file too.
+  "typescript.preferences.autoImportFileExcludePatterns": ["repos/**"],
+  "javascript.preferences.autoImportFileExcludePatterns": ["repos/**"],
+  "files.exclude": { "repos/**": true },
+  "files.watcherExclude": { "repos/**": true },
+  "search.exclude": { "repos/**": true }
+}
