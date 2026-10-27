@@ -1,7 +1,7 @@
 ---
 title: Wappy
 sourceCodeUrl: https://github.com/williamrjribeiro/wallpaper-ruler-bb10
-storeURL: http://appworld.blackberry.com/webstore/content/35353891/
+storeUrl: http://appworld.blackberry.com/webstore/content/35353891/
 start: 2013-01-01
 end: 2014-01-01
 ---

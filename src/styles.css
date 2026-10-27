@@ -1,0 +1,247 @@
+@import "tailwindcss";
+
+/* Tailwind v4 is configured in CSS: there is no tailwind.config.js. */
+@theme {
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  --font-serif: "Butler", Georgia, Times, serif;
+
+  /* The résumé's own breakpoints. */
+  --breakpoint-md: 670px;
+  --breakpoint-lg: 940px;
+  --breakpoint-xl: 1260px;
+
+  --color-primary: #005b96;
+  --color-secondary: #fc6767;
+  --color-ink: #373a3c;
+  --color-gray-dark: #55595c;
+  --color-gray: #818a91;
+  --color-gray-muted: #4a5257;
+  --color-gray-light: #eceeef;
+
+  --shadow-elevated: 8px 8px 40px -10px rgb(0 0 0 / 0.3);
+
+  --animate-drift: drift 60s ease infinite;
+  @keyframes drift {
+    0%,
+    100% {
+      background-position: 0% 84%;
+    }
+    50% {
+      background-position: 100% 16%;
+    }
+  }
+}
+
+@font-face {
+  font-family: "Butler";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src:
+    url("./assets/fonts/butler-medium.woff2") format("woff2"),
+    url("./assets/fonts/butler-medium.woff") format("woff");
+}
+
+@layer base {
+  html {
+    overflow-y: scroll;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    overflow-x: hidden;
+    font-family: var(--font-sans);
+    line-height: 1.625;
+    color: var(--color-ink);
+    background-color: #fff;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    line-height: 1.2;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1 {
+    font-size: 3.5rem;
+    line-height: 1;
+    @media (min-width: 940px) {
+      font-size: 4.5rem;
+    }
+  }
+
+  h2 {
+    font-size: 2.5rem;
+  }
+
+  h3 {
+    font-size: 1.75rem;
+  }
+
+  a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-decoration-skip-ink: auto;
+    text-decoration-thickness: from-font;
+    &:hover,
+    &:focus-visible {
+      text-decoration-thickness: 0.125em;
+    }
+  }
+
+  :focus-visible {
+    outline: 5px solid var(--color-secondary);
+  }
+
+  ::selection {
+    background: var(--color-primary);
+    color: #fff;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01s !important;
+      transition-duration: 0.01s !important;
+    }
+  }
+}
+
+@layer components {
+  /* A list with a round, secondary-coloured marker. Also what lists inside Markdown look like. */
+  .bulletlist,
+  .markdown ul {
+    padding-left: 1.5em;
+    list-style: none;
+    & > li {
+      position: relative;
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0.5em;
+        left: -1em;
+        display: block;
+        width: 0.5em;
+        height: 0.5em;
+        border-radius: 50%;
+        background-color: var(--color-secondary);
+        transform: translate(-50%, 20%);
+      }
+    }
+  }
+
+  /* HTML rendered from the Markdown files in src/content. */
+  .markdown {
+    & > * + * {
+      margin-top: 1rem;
+    }
+    & a {
+      overflow-wrap: break-word;
+      hyphens: auto;
+    }
+    & img {
+      max-width: 100%;
+      height: auto;
+    }
+    & ol {
+      list-style-type: decimal;
+      padding-left: 1.375rem;
+    }
+  }
+}
+
+@media print {
+  @page {
+    margin: 0.5cm 1.5cm;
+    size: A4;
+  }
+
+  html,
+  body {
+    width: 100%;
+    min-height: 100%;
+    font-size: 11px;
+    line-height: 1.3;
+    overflow: visible;
+    color: #000;
+  }
+
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    transition: none !important;
+  }
+
+  p,
+  h2,
+  h3 {
+    orphans: 2;
+    widows: 2;
+  }
+
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
+    break-inside: avoid;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  .markdown h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 0.3rem;
+  }
+
+  .markdown b,
+  .markdown strong {
+    font-weight: 600;
+  }
+
+  .markdown > * + * {
+    margin-top: 0.4rem;
+  }
+
+  .markdown ul,
+  .markdown ol {
+    padding-left: 1.2rem;
+  }
+
+  .bulletlist li::before,
+  .markdown li::before {
+    print-color-adjust: exact;
+  }
+}
+
+/* The page's side padding; the print layout has none because @page sets the margins. */
+@utility gutter {
+  padding-inline: 5%;
+  max-width: 1200px;
+  @media (min-width: 940px) {
+    padding-inline: 7%;
+  }
+  @media print {
+    padding-inline: 0;
+    max-width: none;
+  }
+}

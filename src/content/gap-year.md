@@ -1,5 +1,4 @@
 ---
-tags: custom
 title: Gap Year
 ---
 
