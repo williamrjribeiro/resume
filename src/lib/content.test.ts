@@ -1,5 +1,6 @@
 /** Turning the Markdown files in src/content into the data the page shows. */
-import { describe, expect, it } from "bun:test";
+import { beforeAll, describe, expect, it } from "bun:test";
+import { loadContentSources } from "../../test/support/files.ts";
 import { buildResume, parseEntry, parsePage, renderMarkdown, splitFrontmatter } from "./content.ts";
 
 describe("content", () => {
@@ -122,6 +123,33 @@ Part of an **Agile** team.`;
     it("fails when a page is missing", () => {
       const { "/src/content/gap-year.md": _gone, ...rest } = sources();
       expect(() => buildResume(rest)).toThrow("src/content needs introduction.md and gap-year.md");
+    });
+  });
+  describe("the files in src/content", () => {
+    let resume: ReturnType<typeof buildResume> | undefined;
+
+    beforeAll(async () => {
+      resume = buildResume(await loadContentSources());
+    });
+
+    it("all parse, with the front matter they need", () => {
+      const counts = Object.values(resume?.entries ?? {}).map((entries) => entries.length);
+      expect(counts).toEqual([7, 2, 2, 4]);
+    });
+
+    it("end after they start", () => {
+      for (const entry of Object.values(resume?.entries ?? {}).flat()) {
+        if (entry.end !== undefined) {
+          expect(entry.end >= entry.start, entry.id).toBe(true);
+        }
+      }
+    });
+
+    it("render to HTML without leftover Markdown", () => {
+      for (const entry of Object.values(resume?.entries ?? {}).flat()) {
+        expect(entry.html, entry.id).not.toMatch(/\*\*|^#{1,6} /m);
+      }
+      expect(resume?.gapYear.html).not.toMatch(/\*\*|^#{1,6} /m);
     });
   });
 });
