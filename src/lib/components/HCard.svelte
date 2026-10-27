@@ -26,13 +26,17 @@
     aria-label={strings.labels.scrollToTop}
     class="mr-8 size-44 shrink-0 cursor-pointer overflow-hidden rounded-full border-[5px] border-white bg-transparent p-0 shadow-elevated max-md:mx-auto max-md:transition-all max-md:group-data-scrolled:fixed max-md:group-data-scrolled:top-0 max-md:group-data-scrolled:-right-10 max-md:group-data-scrolled:z-10 max-md:group-data-scrolled:-translate-y-10 max-md:group-data-scrolled:scale-50 lg:fixed lg:top-[calc(2rem+1rem)] lg:right-3/4 lg:m-0 lg:translate-x-1/4 lg:transition-transform lg:group-data-scrolled:scale-75 print:static! print:m-0! print:size-[50px]! print:translate-x-0! print:scale-100! print:border-0!"
   >
-    <img
-      class="u-photo size-full object-cover"
-      src={asset("images/avatar.jpg")}
-      width="200"
-      height="200"
-      alt={author.name}
-    />
+    <!-- WebP where the browser can show it. The JPEG is the fallback, and is the `u-photo` that parsers read. -->
+    <picture class="contents">
+      <source srcset={asset("images/avatar.webp")} type="image/webp" />
+      <img
+        class="u-photo size-full object-cover"
+        src={asset("images/avatar.jpg")}
+        width="200"
+        height="200"
+        alt={author.name}
+      />
+    </picture>
   </button>
 
   <div class="pt-4 max-md:w-full print:flex-1 print:pt-0">

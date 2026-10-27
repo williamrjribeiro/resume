@@ -23,6 +23,7 @@ The tooling comes from the `bun-agentic-starter` template; see [AGENTS.md](./AGE
 
 - Text and dates live in Markdown files with a YAML header in [src/content](./src/content): `work/`, `apps/`, `education/` and `volunteering/` hold one file per entry, `introduction.md` and `gap-year.md` are the free-form sections. Entries are sorted by `start`, newest first. `printHidden: true` leaves an entry out of the printed résumé.
 - The name, contact details, skills, languages and social links are in [src/lib/data/author.ts](./src/lib/data/author.ts); the site URL and colours are in [src/lib/data/site.ts](./src/lib/data/site.ts).
+- The avatar is `static/images/avatar.jpg` and its WebP twin `avatar.webp`; replace both together. Browsers that support WebP load it, the others fall back to the JPEG, which is also the address the h-card and the social cards use.
 - The page is built from the components in [src/lib/components](./src/lib/components), styled with Tailwind utilities. The theme (colours, fonts, breakpoints) and the print layout are in [src/styles.css](./src/styles.css).
 
 ## Markup

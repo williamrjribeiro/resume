@@ -36,6 +36,15 @@ describe("HCard", () => {
     ]);
   });
 
+  it("offers the photo as WebP, with the JPEG as the fallback that parsers read", () => {
+    expect(body).toMatch(
+      /<picture[^>]*><source srcset="\.\/images\/avatar\.webp" type="image\/webp"[^>]*>\s*<img [^>]*src="\.\/images\/avatar\.jpg"/,
+    );
+    expect(card?.properties["photo"]).toEqual([
+      { value: new URL("images/avatar.jpg", site.url).href, alt: author.name },
+    ]);
+  });
+
   it("links the website, which is also the card's uid", () => {
     expect(card?.properties["uid"]).toEqual([site.url]);
     expect(card?.properties["url"]).toContain(site.url);
