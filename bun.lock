@@ -5,7 +5,6 @@
     "": {
       "name": "resume",
       "devDependencies": {
-        "@beads/bd": "1.3.1",
         "@sveltejs/adapter-static": "^4.0.0",
         "@sveltejs/kit": "^3.1.0",
         "@sveltejs/vite-plugin-svelte": "^7.3.1",
@@ -27,12 +26,9 @@
   },
   "trustedDependencies": [
     "agent-browser",
-    "@beads/bd",
     "lefthook",
   ],
   "packages": {
-    "@beads/bd": ["@beads/bd@1.3.1", "", { "os": [ "!aix", "!sunos", "!freebsd", "!openbsd", ], "cpu": [ "x64", "arm64", ], "hasInstallScript": true, "bin": { "bd": "bin/bd.js" } }, "sha512-1CDk1ddWz0F76tuDvFXxklG0Ez2nt3zBMRTyDIZ40wIzulQrRPRUAiSISgHRJ/ymlMZBEnV5ZM7Q02xKZEvbFg=="],
-
     "@jridgewell/gen-mapping": ["@jridgewell/gen-mapping@0.3.13", "", { "dependencies": { "@jridgewell/sourcemap-codec": "^1.5.0", "@jridgewell/trace-mapping": "^0.3.24" } }, "sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA=="],
 
     "@jridgewell/remapping": ["@jridgewell/remapping@2.3.5", "", { "dependencies": { "@jridgewell/gen-mapping": "^0.3.5", "@jridgewell/trace-mapping": "^0.3.24" } }, "sha512-LI9u/+laYG4Ds1TDKSJW2YPrIlcVYOwi2fUC6xB43lueCjgxV4lffOCZCtYFiH6TNOX+tQKXx97T4IKHbhyHEQ=="],

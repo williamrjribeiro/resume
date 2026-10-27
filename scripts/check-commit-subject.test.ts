@@ -11,7 +11,7 @@ describe("check-commit-subject", () => {
       "feat: add a parser",
       "fix(api): put Bm over couldn't",
       "docs(api)!: rename the context",
-      "chore: leave the Beads files to bd",
+      "chore: leave the lockfile to bun",
       "Merge branch 'main' into feat/api",
       'Revert "feat: add a parser"',
       "fixup! feat: add a parser",
@@ -21,7 +21,7 @@ describe("check-commit-subject", () => {
 
     it.each([
       "Update README",
-      "bd: update sync.remote",
+      "bun: update the lockfile",
       "Tabs Hero Player PRD (#1)",
       "feat add a parser",
       "feat:add a parser",

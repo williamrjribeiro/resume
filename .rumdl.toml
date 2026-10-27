@@ -17,7 +17,6 @@ exclude = [
     "node_modules",
     "dist",
     "out",
-    ".beads",
     "repos",
     # Vendored from vercel-labs/agent-browser v0.38.2 — do not reformat upstream.
     ".agents/skills/agent-browser",

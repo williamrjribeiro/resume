@@ -16,7 +16,6 @@ Bun-based repository for William's résumé: a static Svelte 5 + Tailwind CSS 4 
 
 | Topic | Skill |
 | --- | --- |
-| Beads / Scotty / Dolt sync | `beads` |
 | Tests (BDD + `bun:test`) | `bdd-bun-test` |
 | A web page in a browser | `agent-browser` |
 

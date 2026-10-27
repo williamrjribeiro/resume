@@ -7,8 +7,6 @@ Canonical Agent Skills for this repository. Claude Code loads the same trees via
 | Skill | Purpose |
 | --- | --- |
 | [`repo-conventions`](./repo-conventions/SKILL.md) | Bun tooling, quality gates, hooks, commits, `bun check` |
-| [`beads`](./beads/SKILL.md) | Beads issue tracking, issue types, sync, session completion |
-| [`scotty`](./scotty/SKILL.md) | Beads UI in Docker or rootless Podman: `SCOTTY_USER`, volumes, empty board, versions |
 | [`bdd-bun-test`](./bdd-bun-test/SKILL.md) | BDD + `bun:test` rules |
 | [`browser-verification`](./browser-verification/SKILL.md) | Checking pages in a browser with agent-browser only |
 
