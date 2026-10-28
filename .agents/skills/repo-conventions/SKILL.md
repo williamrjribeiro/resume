@@ -50,7 +50,7 @@ bun run dev / build / preview    # Vite dev server; static site in build/
 bun run check:hcard              # the built page must carry the author's h-card
 bun run check:svelte             # svelte-check over the .svelte files (through bunx, see the svelte skill)
 bun run prd                      # build, serve build/ over HTTPS
-bun run serve:https              # serve SERVE_DIR (default dist) over HTTPS
+bun run serve:https              # serve SERVE_DIR (default dist) over HTTPS: HTTP/3, HTTP/2, HTTP/1.1, brotli
 bun run certs / certs:clean      # local HTTPS certificate in .certs/
 ```
 
