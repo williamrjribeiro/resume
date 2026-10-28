@@ -13,8 +13,12 @@
   --breakpoint-lg: 940px;
   --breakpoint-xl: 1260px;
 
+  /* The colours of the original style. A writing style can replace the first six with its own, see src/lib/theme.ts. */
   --color-primary: #005b96;
   --color-secondary: #fc6767;
+  --color-gradient-from: #a24bcf;
+  --color-gradient-to: #4bc5cf;
+  --color-paper: #ffffff;
   --color-ink: #373a3c;
   --color-gray-dark: #55595c;
   --color-gray: #818a91;
@@ -59,7 +63,7 @@
     font-family: var(--font-sans);
     line-height: 1.625;
     color: var(--color-ink);
-    background-color: #fff;
+    background-color: var(--color-paper);
   }
 
   h1,

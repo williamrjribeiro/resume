@@ -10,6 +10,7 @@
   import { strings } from "#lib/data/site.ts";
   import { writingStyles } from "#lib/data/styles.ts";
   import { applyStyle, fetchStyle, originalStyle, type StyledResume } from "#lib/styles.ts";
+  import { applyTheme } from "#lib/theme.ts";
   import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
   import { onMount } from "svelte";
@@ -27,6 +28,20 @@
   const resume = $derived.by(() => {
     const style = loaded.get(styleId);
     return style === undefined ? data.resume : applyStyle(data.resume, style);
+  });
+
+  // The colours of the style's character, on the whole page: the root element carries them as CSS variables.
+  const theme = $derived(
+    styles.find((style) => style.id === styleId)?.theme ?? originalStyle.theme,
+  );
+  $effect(() => {
+    applyTheme(
+      {
+        root: document.documentElement.style,
+        themeColor: document.querySelector('meta[name="theme-color"]'),
+      },
+      theme,
+    );
   });
 
   async function chooseStyle(id: string): Promise<boolean> {

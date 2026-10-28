@@ -1,13 +1,43 @@
 import type { Entry, Page, Resume } from "./content.ts";
 
-/** A way of writing the résumé, such as "Yoda". */
+/** The colours of the page. Each one replaces a CSS variable, see `src/lib/theme.ts`. */
+export interface Theme {
+  /** Links, headings in print, the middle of the sidebar's gradient. Needs 4.5:1 on `paper`. */
+  readonly primary: string;
+  /** Markers, the focus outline. Needs 3:1 on `paper`. */
+  readonly secondary: string;
+  /** The two ends of the sidebar's moving gradient. Icons on it are white, so they need 3:1. */
+  readonly gradientFrom: string;
+  readonly gradientTo: string;
+  /** The background of the page. */
+  readonly paper: string;
+  /** The background of the footer. */
+  readonly tint: string;
+}
+
+/** A way of writing the résumé, such as "Yoda", with the colours of its character. */
 export interface WritingStyle {
   readonly id: string;
   readonly label: string;
+  readonly theme: Theme;
 }
 
+/** The colours the style sheet starts with. They are `src/styles.css`'s, and a test keeps the two together. */
+export const originalTheme: Theme = {
+  primary: "#005b96",
+  secondary: "#fc6767",
+  gradientFrom: "#a24bcf",
+  gradientTo: "#4bc5cf",
+  paper: "#ffffff",
+  tint: "#eceeef",
+};
+
 /** The résumé as it is written in `src/content`. It is what the page shows first. */
-export const originalStyle: WritingStyle = { id: "original", label: "Original" };
+export const originalStyle: WritingStyle = {
+  id: "original",
+  label: "Original",
+  theme: originalTheme,
+};
 
 /** One block of Markdown, as written and rendered. */
 export interface StyledText {

@@ -2,12 +2,13 @@
 import { describe, expect, it } from "bun:test";
 import { renderComponent } from "../../../test/support/render.ts";
 import { strings } from "#lib/data/site.ts";
+import { originalStyle, originalTheme } from "#lib/styles.ts";
 import StylePicker from "./StylePicker.svelte";
 
 describe("StylePicker", () => {
   const styles = [
-    { id: "original", label: "Original" },
-    { id: "yoda", label: "Yoda" },
+    originalStyle,
+    { id: "yoda", label: "Yoda", theme: { ...originalTheme, primary: "#3a7d4e" } },
   ];
   const render = (props: Partial<Parameters<typeof StylePicker>[1]> = {}) =>
     renderComponent(StylePicker, { styles, value: "original", onchange: () => {}, ...props }).body;

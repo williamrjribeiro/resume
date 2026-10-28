@@ -35,7 +35,7 @@
     <label for="writing-style" class="text-gray-muted">{strings.labels.writingStyle}</label>
     <select
       id="writing-style"
-      class="rounded-sm border border-gray bg-white px-2 py-1 text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-60"
+      class="rounded-sm border border-gray bg-paper px-2 py-1 text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-60"
       {disabled}
       {value}
       onchange={(event) => onchange(event.currentTarget.value)}
