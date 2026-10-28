@@ -24,6 +24,9 @@
     "check:hcard": "bun scripts/check-microformats.ts build/index.html",
     "check:security": "bun scripts/check-security.ts",
     "lighthouse": "bun scripts/lighthouse.ts",
+    "release:patch": "bun scripts/release.ts patch",
+    "release:minor": "bun scripts/release.ts minor",
+    "release:major": "bun scripts/release.ts major",
     "check:svelte": "bun --bun svelte-kit sync && bunx svelte-check@4.7.7 --tsconfig ./tsconfig.svelte.json --fail-on-warnings",
     "certs": "bun scripts/certs.ts",
     "certs:clean": "rm -rf .certs",
@@ -64,7 +67,7 @@
     "agent-browser",
     "lefthook"
   ],
-  "version": "3.0.0",
+  "version": "2.2.6",
   "author": "William R. J. Ribeiro",
   "repository": {
     "type": "git",

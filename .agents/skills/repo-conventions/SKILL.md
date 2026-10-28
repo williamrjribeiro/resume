@@ -51,6 +51,7 @@ bun run check:hcard              # the built page must carry the author's h-card
 bun run check:svelte             # svelte-check over the .svelte files (through bunx, see the svelte skill)
 bun run check:security           # the built pages carry a strict CSP (Google's evaluator)
 bun run lighthouse               # best practices over the build; fails on any Trust and Safety finding (docs/security.md)
+bun run release:patch|minor|major   # bump, tag and push: publishes the site (README, "Release"). Only when asked
 bun run prd                      # build, serve build/ over HTTPS
 bun run serve:https              # serve SERVE_DIR (default dist) over HTTPS: HTTP/3, HTTP/2, HTTP/1.1, brotli
 bun run certs / certs:clean      # local HTTPS certificate in .certs/

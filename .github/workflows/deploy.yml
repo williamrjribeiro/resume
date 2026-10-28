@@ -1,8 +1,12 @@
 name: Deploy
 
-# Pushing a version tag (v3.0.0) publishes the site to GitHub Pages and creates the GitHub Release
-# for the tag. Creating a release in the GitHub UI pushes the tag too, so that works as well.
-# Run it by hand from the Actions tab to redeploy the current commit.
+# A release is made on a developer's machine with `bun run release:patch`, `release:minor` or
+# `release:major` (scripts/release.ts), which bumps the version in package.json, commits it, tags the
+# commit vX.Y.Z and pushes both. The tag starts this workflow, which checks the commit again, builds the
+# site, publishes it to GitHub Pages and creates the GitHub Release. The tag is pushed from a machine
+# because a tag pushed with a workflow's own token does not start other workflows.
+#
+# To publish a tag again, run it from the Actions tab and choose the tag under "Use workflow from".
 on:
   push:
     tags:
@@ -24,9 +28,23 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
+        with:
+          # The whole history, to see whether the tag is on the default branch.
+          fetch-depth: 0
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version-file: .bun-version
+      # Only code that is on the default branch, and has been through its checks, may be released.
+      - name: Check the tag is on the default branch
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          git fetch --no-tags origin "$DEFAULT_BRANCH"
+          if ! git merge-base --is-ancestor "$GITHUB_SHA" "origin/$DEFAULT_BRANCH"; then
+            echo "::error::The tag $GITHUB_REF_NAME is not on $DEFAULT_BRANCH, so it is not released."
+            exit 1
+          fi
       - name: Check the tag matches the version in package.json
         if: startsWith(github.ref, 'refs/tags/')
         run: test "v$(bun -p 'require("./package.json").version')" = "$GITHUB_REF_NAME"
@@ -36,6 +54,9 @@ jobs:
         run: bun run verify
       - name: Check the Svelte files
         run: bun run check:svelte
+      # Builds the site into build/ itself, so it runs before the build that is published.
+      - name: Lighthouse, Trust and Safety
+        run: bun run lighthouse
       # Knows where Pages serves the site: /resume for a project site, nothing for a custom domain.
       - id: pages
         uses: actions/configure-pages@v6

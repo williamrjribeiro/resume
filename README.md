@@ -44,16 +44,36 @@ The page has a strict Content Security Policy with Trusted Types, and `bun run s
 
 ## Release
 
-Pages are deployed from version tags, never from branches:
+A release is one command, run on your machine from `master` with everything merged and nothing uncommitted:
 
-1. Set `version` in `package.json` (the deploy fails if it differs from the tag) and commit.
-2. Create a release with a tag such as `v3.0.0` on GitHub, or run `git tag v3.0.0 && git push origin v3.0.0`.
-3. The [Deploy](./.github/workflows/deploy.yml) workflow verifies and builds the site, publishes it to GitHub Pages and, when the tag came from `git push`, creates the GitHub Release with generated notes.
+```bash
+bun run release:patch   # 3.0.0 → 3.0.1
+bun run release:minor   # 3.0.0 → 3.1.0
+bun run release:major   # 3.0.0 → 4.0.0
+
+bun scripts/release.ts patch --dry-run   # checks everything and says what it would do
+```
+
+[scripts/release.ts](./scripts/release.ts) bumps `version` in `package.json` with `bun pm version`, commits it as `chore(release): vX.Y.Z` (through the git hooks), tags the commit `vX.Y.Z` and pushes the branch and the tag together, all or nothing. It refuses unless it can release exactly what is on `origin/master`: on that branch, clean, in sync with the remote, and with no tag of that name. If a hook or the push fails, it puts the repository back as it was.
+
+The tag starts the [Deploy](./.github/workflows/deploy.yml) workflow, which checks the commit again before it publishes anything:
+
+1. The tag is on the default branch, and matches the version in `package.json`.
+2. `bun run verify`, `bun run check:svelte` and `bun run lighthouse` pass.
+3. The site is built with the Pages base path, and its h-card and Content Security Policy are checked.
+4. Only then is it published to GitHub Pages, and the GitHub Release is created with generated notes.
+
+The tag is pushed from your machine, not by a workflow, because a tag pushed with a workflow's own token does not start other workflows.
+
+- **The first release.** `version` is `2.2.6`, the last release of the old site, so the first `bun run release:major` after this branch is merged makes `v3.0.0`.
+- **A failed deploy.** Fix the problem on `master` and release again; a failed tag has no GitHub Release. To publish a tag again, run the workflow from the Actions tab and choose the tag under **Use workflow from**.
+- **A protected `master`.** If it only accepts pull requests, the push is refused and the script undoes the release. Let yourself bypass the rule for this push, or let the release commit through a ruleset.
 
 One-time repository settings:
 
 - **Settings → Pages → Source** must be **GitHub Actions**.
 - **Settings → Environments → github-pages → Deployment branches and tags** must allow the tag pattern `v*.*.*` (the default only allows the default branch).
+- Optional: a tag ruleset for `v*` that only lets maintainers create tags, since a tag now publishes the site.
 
 The site is served from `/resume/`; the workflow takes `BASE_PATH` from the Pages configuration, so it is empty on a custom domain. Moving to one also means updating `site.url` and `author.website`.
 
