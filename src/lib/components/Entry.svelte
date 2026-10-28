@@ -11,12 +11,15 @@
   const hasLinks = $derived(entry.sourceCodeUrl !== undefined || entry.storeUrl !== undefined);
 </script>
 
-<article class="break-inside-avoid">
-  <div class="flex flex-col not-last:mb-2 print:mb-1">
-    <h3 class="p-name print:mb-0.5 print:text-base print:leading-[1.1]">{entry.title}</h3>
+<!-- Print sets the dates on the right of the title, and lets a long entry run on to the next page. -->
+<article class="break-inside-avoid print:break-inside-auto">
+  <div
+    class="flex flex-col not-last:mb-2 print:grid print:break-after-avoid print:grid-cols-[1fr_auto] print:items-baseline print:gap-x-4 print:not-last:mb-1"
+  >
+    <h3 class="p-name">{entry.title}</h3>
 
     <p
-      class="order-first mb-1 text-sm tracking-[0.125em] text-gray-muted uppercase print:mb-0.5 print:text-[0.7rem] print:tracking-[0.05em]"
+      class="order-first mb-1 text-sm tracking-[0.125em] text-gray-muted uppercase print:order-none print:col-start-2 print:row-start-1 print:mb-0 print:text-[0.8rem] print:tracking-[0.06em] print:whitespace-nowrap"
     >
       <time class="dt-start" datetime={entry.start}>{formatMonthYear(entry.start)}</time>
       <span>&ndash;</span>
@@ -28,7 +31,9 @@
     </p>
 
     {#if entry.organization}
-      <p class="text-lg print:text-[0.9rem]">
+      <p
+        class="text-lg print:col-span-2 print:text-[0.95rem] print:leading-snug print:text-gray-dark"
+      >
         <span class="p-org h-card">
           {#if entry.organizationUrl}
             <a
@@ -49,7 +54,9 @@
     {/if}
 
     {#if hasLinks}
-      <p class="text-lg print:text-[0.9rem]">
+      <p
+        class="text-lg print:col-span-2 print:text-[0.95rem] print:leading-snug print:text-gray-dark"
+      >
         {#if entry.sourceCodeUrl}
           <a href={entry.sourceCodeUrl} target="_blank" rel="noopener noreferrer"
             >{strings.labels.sourceCode}</a
@@ -68,9 +75,7 @@
   </div>
 
   {#if entry.html}
-    <div
-      class="p-summary e-content markdown max-w-[60ch] print:max-w-none print:text-[0.85rem] print:leading-tight"
-    >
+    <div class="p-summary e-content markdown max-w-[60ch] print:max-w-none">
       <!-- The Markdown comes from src/content, which the site owner writes. -->
       {@html entry.html}
     </div>

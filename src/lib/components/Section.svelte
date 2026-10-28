@@ -12,11 +12,9 @@
   let { id, title, class: className, children }: Props = $props();
 </script>
 
-<section {id} class={["break-inside-avoid py-8 print:py-2", className]}>
+<section {id} class={["break-inside-avoid py-8 print:pt-4 print:pb-0", className]}>
   {#if title}
-    <h2
-      class="mb-8 border-b border-gray pb-2 print:mb-1.5 print:border-[#b5b5b5] print:pb-1 print:text-xl print:leading-[1.1]"
-    >
+    <h2 class="mb-8 border-b border-gray pb-2 print:mb-2 print:border-[#d5dadd] print:pb-1">
       {title}
     </h2>
   {/if}

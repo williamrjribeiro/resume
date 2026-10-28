@@ -16,6 +16,10 @@
   const SCROLLED_AFTER = 200;
   let scrollY = $state(0);
   const scrolled = $derived(scrollY > SCROLLED_AFTER);
+
+  // Print runs the skills and the languages together as one line each, separated by dots.
+  const printInline =
+    "print:pl-0 print:whitespace-nowrap print:before:hidden print:not-last:after:px-1.5 print:not-last:after:text-secondary print:not-last:after:content-['·']";
 </script>
 
 <svelte:window bind:scrollY />
@@ -23,14 +27,16 @@
 <Head />
 
 <!--
-  Print turns the page into one A4 sheet: the h-card beside the introduction, then the work, the
-  apps, and skills, languages and education in three columns.
+  Print turns the page into at most two A4 sheets: the h-card as a letterhead, the introduction, the work
+  and the apps, then skills and languages side by side above the education.
 -->
 <div
-  class="group relative min-h-screen lg:grid lg:grid-cols-[25%_1fr] lg:grid-rows-[auto_1fr_auto] print:grid print:min-h-0 print:grid-cols-[45%_1fr] print:gap-8"
+  class="group relative min-h-screen lg:grid lg:grid-cols-[25%_1fr] lg:grid-rows-[auto_1fr_auto] print:block print:min-h-0"
   data-scrolled={scrolled ? "" : undefined}
 >
-  <header class="pt-8 lg:col-start-2 lg:row-start-1 print:p-0">
+  <header
+    class="pt-8 lg:col-start-2 lg:row-start-1 print:border-b-2 print:border-primary print:pt-0 print:pb-3"
+  >
     <div class="gutter">
       <HCard />
     </div>
@@ -39,13 +45,9 @@
   <!-- The résumé itself (https://microformats.org/wiki/h-resume); the person is the h-card above. -->
   <main class="h-resume lg:col-start-2 lg:row-start-2 print:contents">
     <div class="gutter print:contents">
-      <Section
-        id="section-introduction"
-        title={resume.introduction.title}
-        class="print:self-start print:py-0"
-      >
+      <Section id="section-introduction" title={resume.introduction.title} class="print:pt-3">
         <div
-          class="lead p-summary e-content markdown max-w-[60ch] text-xl leading-normal font-light md:text-2xl print:text-base"
+          class="lead p-summary e-content markdown max-w-[60ch] text-xl leading-normal font-light md:text-2xl print:max-w-none print:text-[1.05rem] print:leading-snug print:font-normal print:[&_i]:text-gray-dark"
         >
           <!-- The Markdown comes from src/content, which the site owner writes. -->
           {@html resume.introduction.html}
@@ -55,26 +57,26 @@
       <Section
         id="section-experience"
         title={strings.titles.experience}
-        class="print:col-span-2 print:break-inside-auto"
+        class="print:break-inside-auto"
       >
         <EntryList entries={resume.entries.work} property="p-experience" />
       </Section>
 
-      <Section id="section-apps" title={strings.titles.apps} class="print:col-span-2">
+      <Section id="section-apps" title={strings.titles.apps}>
         <EntryList entries={resume.entries.apps} property="p-apps" />
       </Section>
 
       <div
-        class="grid break-inside-avoid grid-cols-2 gap-x-16 print:col-span-2 print:grid-cols-3 print:gap-5"
+        class="grid break-inside-avoid grid-cols-2 gap-x-16 print:grid-cols-[3fr_2fr] print:gap-x-8"
       >
         <Section
           id="section-skills"
           title={strings.titles.skills}
-          class="col-span-2 md:col-span-1 print:col-span-1 print:py-0"
+          class="col-span-2 md:col-span-1 print:col-span-1"
         >
-          <ul class="bulletlist print:pl-3">
+          <ul class="bulletlist print:flex print:flex-wrap print:pl-0">
             {#each author.skills as skill (skill)}
-              <li class="p-skill print:mb-px print:text-[0.8rem] print:leading-tight">{skill}</li>
+              <li class={["p-skill", printInline]}>{skill}</li>
             {/each}
           </ul>
         </Section>
@@ -82,11 +84,11 @@
         <Section
           id="section-languages"
           title={strings.titles.languages}
-          class="col-span-2 md:col-span-1 print:col-span-1 print:py-0"
+          class="col-span-2 md:col-span-1 print:col-span-1"
         >
-          <ul class="bulletlist print:pl-3">
+          <ul class="bulletlist print:flex print:flex-wrap print:pl-0">
             {#each author.languages as language (language.name)}
-              <li class="p-skill print:mb-px print:text-[0.8rem] print:leading-tight">
+              <li class={["p-skill", printInline]}>
                 {language.name} ({language.level})
               </li>
             {/each}
@@ -96,7 +98,7 @@
         <Section
           id="section-education"
           title={strings.titles.education}
-          class="col-span-2 md:col-span-1 print:col-span-1 print:py-0"
+          class="col-span-2 md:col-span-1 print:col-span-2"
         >
           <EntryList entries={resume.entries.education} property="p-education" />
         </Section>
