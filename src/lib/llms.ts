@@ -80,7 +80,7 @@ export const buildLlmsTxt = ({ resume, author, siteUrl }: LlmsOptions): string =
       "Contact: through the profiles below. The email address and the telephone number are on the web page.",
     ]),
     `## Résumé\n${bullets([
-      `${link("Résumé in Markdown", markdownUrl)}: every job, app, degree and volunteering role, with dates and descriptions.`,
+      `${link("Résumé in Markdown", markdownUrl)}: every job, open source project, degree and volunteering role, with dates and descriptions.`,
       `${link("Résumé web page", siteUrl)}: the same résumé as HTML, marked up with the h-card and h-resume microformats.`,
     ])}`,
     `## ${strings.titles.experience}\n${bullets(entries(resume, "work").map((entry) => listed(entry)))}`,
