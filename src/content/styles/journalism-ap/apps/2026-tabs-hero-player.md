@@ -1,0 +1,1 @@
+Tabs Hero Player is a Guitar Hero-style web app for playing guitar tabs. Users can install it as a PWA. The Bun monorepo in TypeScript has a SolidJS front end and was built with AI agents running in parallel Git worktrees. It also holds the Semantic Tab Format, a specification with a reference parser and validator, and a pure TypeScript player clock.
