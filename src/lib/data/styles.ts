@@ -14,4 +14,5 @@ export const writingStyles: ReadonlyArray<WritingStyle> = [
   { id: "jack-sparrow", label: "Jack Sparrow" },
   { id: "journalism-ap", label: "AP journalism" },
   { id: "orwells-rules", label: "Orwell's rules" },
+  { id: "paddington", label: "Paddington" },
 ];
