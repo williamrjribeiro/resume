@@ -1,0 +1,9 @@
+<b>Founding product team member:</b> Starting something new in a new office is a leap. I was selected as one of the first employees to establish the Lisbon office product team, solving real problems for VW's customers and dealerships. I built client relationships with clear written and verbal communication and applied critical thinking to complex dealership workflows. After intensive onboarding in Berlin with our experienced German colleagues, I quickly adopted Extreme Programming (XP) practices, including test-driven development and pair programming.
+
+<b>Frontend excellence:</b> Slow rendering frustrates everyone. I introduced MobX state management and taught it to the team, and rendering performance improved significantly. Multiple teams adopted the architecture patterns. I designed responsive, accessible web applications with React and TypeScript, and I documented components in Storybook.
+
+<b>Engineering practices:</b> Shipping untested code feels terrible. I championed TDD with Jest and React Testing Library. I embraced DevOps culture with Infrastructure as Code, AWS cloud services, and GitHub Actions for continuous integration pipelines. I implemented end-to-end testing with Nightwatch.js to ensure cross-browser compatibility.
+
+<b>Technical leadership:</b> Technical interviews make people nervous. So I ran them as collaborative pairing sessions using TDD. I coached colleagues on effective technical assessment techniques. It strengthened the organization's hiring process.
+
+<b>Full-stack development:</b> Building a company's first public website is a big job. I designed and developed it (vwds.pt). It shows our software development capabilities and innovative approach. I also built robust backend services and REST APIs with Golang and Kotlin and PostgreSQL databases, applying domain-driven design principles.

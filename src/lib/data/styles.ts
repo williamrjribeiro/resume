@@ -18,4 +18,5 @@ export const writingStyles: ReadonlyArray<WritingStyle> = [
   { id: "plain-language", label: "Plain language" },
   { id: "scott-adams", label: "Scott Adams" },
   { id: "shrek", label: "Shrek" },
+  { id: "ted-lasso", label: "Ted Lasso" },
 ];
