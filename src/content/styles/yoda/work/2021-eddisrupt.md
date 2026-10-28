@@ -1,0 +1,1 @@
+Ambassador of Eddisrupt, I am. The education sector to disrupt, our mission is. We offer high-quality learning materials and mentoring programs at an accessible price. Content about software engineering, I make: blog posts, presentations, workshops. Best of all, mentoring our students is. Great software engineers they become. For their first jobs in the industry, they apply.

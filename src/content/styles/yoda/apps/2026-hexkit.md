@@ -1,0 +1,1 @@
+A contract-driven generator of production-ready TypeScript REST API applications, Hexkit is. Ports & Adapters, the generated projects follow. They use OpenAPI 3.1, Zod, Hono, Drizzle ORM, and PostgreSQL. Spec-first, it was: an RFC and a PRD before code. Then, a 90% coverage gate.
