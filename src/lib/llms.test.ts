@@ -68,7 +68,7 @@ describe("llms", () => {
 
     it("puts the apps in the Optional section, which is last, linked to their source", () => {
       expect(llms).toMatch(
-        /## Optional\n- \[Wappy\]\(https:\/\/github\.com\/x\/wappy\): Indie app, 2013-01 – 2014-01\.\n$/,
+        /## Optional\n- \[Wappy\]\(https:\/\/github\.com\/x\/wappy\): Open source project, 2013-01 – 2014-01\.\n$/,
       );
     });
 
@@ -81,7 +81,7 @@ describe("llms", () => {
       expect(headings).toEqual([
         "About Me",
         "Work Experience",
-        "Indie Apps",
+        "Open Source Projects",
         "Skills",
         "Languages",
         "Education",
@@ -127,7 +127,7 @@ describe("llms", () => {
 
     it("lists every job and the organization it links to", () => {
       const jobs = llms.split("## Work Experience\n")[1]?.split("\n\n")[0]?.split("\n") ?? [];
-      expect(jobs).toHaveLength(9);
+      expect(jobs).toHaveLength(7);
       expect(llms).toContain(
         "[Principal Software Engineer at Hala Systems Inc.](https://www.halasystems.com/)",
       );

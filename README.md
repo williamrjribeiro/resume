@@ -29,7 +29,7 @@ The tooling comes from the `bun-agentic-starter` template; see [AGENTS.md](./AGE
 ## Markup
 
 - The header is a top-level `h-card` with `u-url` equal to `u-uid`, which is how parsers find the representative h-card of the page. Social links are `rel="me"`.
-- The résumé itself is an `h-resume` whose jobs, degrees and apps are `h-event` items, each with its organisation as a nested `p-org h-card`.
+- The résumé itself is an `h-resume` whose jobs, degrees and open source projects are `h-event` items, each with its organisation as a nested `p-org h-card`.
 
 ## Security
 

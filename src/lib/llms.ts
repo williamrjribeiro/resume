@@ -68,7 +68,7 @@ export const buildLlmsTxt = ({ resume, author, siteUrl }: LlmsOptions): string =
 
   const sections = [
     `# ${author.name}`,
-    `> Online résumé of ${author.name}, ${author.occupation} in ${place(author)}: work experience, indie apps, education and volunteering.`,
+    `> Online résumé of ${author.name}, ${author.occupation} in ${place(author)}: work experience, open source projects, education and volunteering.`,
     // Text without headings, which is all the spec allows between the summary and the first list.
     inlineHtmlToMarkdown(resume.introduction.markdown),
     bullets([
@@ -86,7 +86,7 @@ export const buildLlmsTxt = ({ resume, author, siteUrl }: LlmsOptions): string =
     `## ${strings.titles.experience}\n${bullets(entries(resume, "work").map((entry) => listed(entry)))}`,
     `## Profiles\n${bullets(author.social.map((social) => `${link(social.name, social.url)}: ${social.user}`))}`,
     `## Optional\n${bullets([
-      ...entries(resume, "apps").map((entry) => listed(entry, "Indie app")),
+      ...entries(resume, "apps").map((entry) => listed(entry, "Open source project")),
       ...entries(resume, "volunteering").map((entry) => listed(entry, "Volunteering")),
     ])}`,
   ];

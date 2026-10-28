@@ -11,7 +11,7 @@ export const strings = {
     education: "Education",
     skills: "Skills",
     languages: "Languages",
-    apps: "Indie Apps",
+    apps: "Open Source Projects",
     volunteering: "Volunteering",
   },
   labels: {

@@ -36,10 +36,10 @@ describe("the page", () => {
     it("lists the jobs, the apps, the degrees and the volunteering as the résumé's h-events", () => {
       const resume = items[1];
       const count = (property: string) => (resume?.properties[property] ?? []).length;
-      expect(count("experience")).toBe(9);
-      expect(count("apps")).toBe(2);
+      expect(count("experience")).toBe(7);
+      expect(count("apps")).toBe(3);
       expect(count("education")).toBe(2);
-      expect(count("volunteering")).toBe(4);
+      expect(count("volunteering")).toBe(1);
     });
 
     it("lists the skills and the languages as skills of the résumé", () => {
@@ -96,8 +96,8 @@ describe("the page", () => {
   });
 
   describe("print", () => {
-    it("leaves out the early jobs, the volunteering and the gap year", () => {
-      expect(body.match(/<li [^>]*print:hidden/g)).toHaveLength(3);
+    it("leaves out the early job, the volunteering and the gap year", () => {
+      expect(body.match(/<li [^>]*print:hidden/g)).toHaveLength(1);
       expect(body).toMatch(/<section id="section-volunteering" class="[^"]*print:hidden/);
       expect(body).toMatch(/<section id="section-gap-year" class="[^"]*print:hidden/);
     });
