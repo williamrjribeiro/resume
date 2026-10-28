@@ -73,3 +73,7 @@ server output, and replaces `$app/paths` and `import.meta.glob`, which only Svel
 - Assert microformats with `parseMicroformats` from `test/support/microformats.ts` instead of matching strings.
 - `src/routes/page.test.ts` renders the whole page from the real files in `src/content`.
 - Follow the `bdd-bun-test` skill: `describe` and `it`, declarations inside the root `describe`.
+
+## Route types
+
+Import route types from `@sveltejs/kit` (`ServerLoad`, `RequestHandler`), never from `./$types`. SvelteKit writes `./$types` only when the `typescript` package can be imported, and this project does not install it, so a fresh checkout (CI) has no `./$types` and `bun check` fails. A machine with a global TypeScript hides the problem: check with `env -u NODE_PATH bun run typecheck` after `rm -rf .svelte-kit`.

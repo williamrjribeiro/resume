@@ -7,9 +7,9 @@
   import Sidebar from "#lib/components/Sidebar.svelte";
   import { author } from "#lib/data/author.ts";
   import { strings } from "#lib/data/site.ts";
-  import type { PageProps } from "./$types";
+  import type { load } from "./+page.server.ts";
 
-  let { data }: PageProps = $props();
+  let { data }: { data: ReturnType<typeof load> } = $props();
   const resume = $derived(data.resume);
 
   // The avatar and the actions in the sidebar change once the page has been scrolled a little.
