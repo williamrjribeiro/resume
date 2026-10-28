@@ -1,0 +1,13 @@
+{
+  // What `bun run check:svelte` checks: everything `bun check` checks plus the `.svelte` files, which
+  // only `svelte-check` can read. A separate file because `bun check` cannot parse `.svelte`.
+  "extends": "./tsconfig.json",
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.svelte",
+    "test/**/*.ts",
+    "vite.config.ts",
+    ".svelte-kit/ambient.d.ts",
+    ".svelte-kit/non-ambient.d.ts"
+  ]
+}

@@ -1,50 +1,81 @@
 {
-    "name": "resume",
-    "version": "2.2.5",
-    "description": "William R. J. Ribeiro's online resume/CV",
-    "scripts": {
-        "start": "npm run dev",
-        "dev": "run-s clean eleventy:dev",
-        "build": "run-s clean eleventy:prod",
-        "eleventy:dev": "cross-env ELEVENTY_ENV=development eleventy --serve",
-        "eleventy:prod": "cross-env ELEVENTY_ENV=production eleventy",
-        "clean": "del-cli dist",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/williamrjribeiro/resume"
-    },
-    "author": "Max Böck, William R. J. Ribeiro",
-    "license": "MIT",
-    "dependencies": {
-        "@11ty/eleventy": "^2.0.1",
-        "@11ty/eleventy-plugin-rss": "^1.2.0",
-        "@babel/core": "^7.9.0",
-        "@babel/preset-env": "^7.9.5",
-        "babel-loader": "^8.1.0",
-        "clean-css": "^5.1.2",
-        "critical": "^3.0.1",
-        "cssesc": "^3.0.0",
-        "del-cli": "^3.0.0",
-        "focus-visible": "^5.1.0",
-        "html-minifier": "^4.0.0",
-        "luxon": "^3.4.4",
-        "markdown-it": "^13.0.2",
-        "memfs": "^4.8.0",
-        "mime": "^2.4.4",
-        "node-sass": "^8.0.0",
-        "npm-run-all": "^4.1.5",
-        "svg-sprite": "^1.5.0",
-        "webpack": "^4.46.0"
-    },
-    "devDependencies": {
-        "cross-env": "^7.0.2"
-    },
-    "engines": {
-        "node": "^16",
-        "npm": "^9",
-        "pnpm": "^8"
-    },
-    "packageManager": "pnpm@8.15.1"
+  "name": "resume",
+  "private": true,
+  "description": "William R. J. Ribeiro's online resume/CV: a static Svelte 5 + Tailwind CSS 4 site on GitHub Pages",
+  "license": "MIT",
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ],
+    "catalog": {}
+  },
+  "type": "module",
+  "imports": {
+    "#lib/*": "./src/lib/*"
+  },
+  "packageManager": "bun@1.4.4",
+  "engines": {
+    "bun": "1.4.4"
+  },
+  "scripts": {
+    "preinstall": "bun scripts/check-bun-version.ts",
+    "prepare": "bun --bun svelte-kit sync && bun scripts/install-git-hooks.ts",
+    "postinstall": "bun scripts/vendor-repos.ts",
+    "vendor": "bun scripts/vendor-repos.ts",
+    "dev": "bun --bun vite dev",
+    "build": "bun --bun vite build && bun scripts/harden-csp.ts",
+    "preview": "bun --bun vite preview",
+    "check:hcard": "bun scripts/check-microformats.ts build/index.html",
+    "check:security": "bun scripts/check-security.ts",
+    "lighthouse": "bun scripts/lighthouse.ts",
+    "release:patch": "bun scripts/release.ts patch",
+    "release:minor": "bun scripts/release.ts minor",
+    "release:major": "bun scripts/release.ts major",
+    "check:svelte": "bun --bun svelte-kit sync && bunx svelte-check@4.7.7 --tsconfig ./tsconfig.svelte.json --fail-on-warnings",
+    "certs": "bun scripts/certs.ts",
+    "certs:clean": "rm -rf .certs",
+    "serve:https": "bun scripts/serve-https.ts",
+    "prd": "bun run build && SERVE_DIR=build bun scripts/serve-https.ts",
+    "fmt": "bun run --parallel --workspaces --if-present fmt && oxfmt scripts src test vite.config.ts",
+    "lint": "bun run --parallel --workspaces --if-present lint && oxlint --disable-nested-config --deny-warnings scripts src test vite.config.ts",
+    "lint:fix": "bun run --parallel --workspaces --if-present lint:fix",
+    "typecheck": "bun --bun svelte-kit sync && bun run --parallel --workspaces --if-present typecheck && bun check",
+    "test": "bun run --parallel --workspaces --if-present test && bun test ./scripts ./src",
+    "md:check": "rumdl check .",
+    "md:fmt": "rumdl fmt .",
+    "md:fmt:check": "rumdl fmt --check .",
+    "fmt:check": "bun run --parallel --workspaces --if-present fmt:check && oxfmt --check scripts src test vite.config.ts",
+    "verify": "bun run --parallel --no-exit-on-error fmt:check lint md:check md:fmt:check typecheck test",
+    "ci": "bun run verify && bun run build"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-static": "^4.0.0",
+    "@sveltejs/kit": "^3.1.0",
+    "@sveltejs/vite-plugin-svelte": "^7.3.1",
+    "@tailwindcss/vite": "4.3.3",
+    "@types/bun": "1.4.4",
+    "agent-browser": "0.38.2",
+    "csp_evaluator": "1.1.8",
+    "lefthook": "2.1.17",
+    "marked": "^18.1.2",
+    "microformats-parser": "^2.0.6",
+    "oxfmt": "0.75.0",
+    "oxlint": "1.90.0",
+    "rumdl": "0.2.78",
+    "svelte": "^5.57.3",
+    "tailwindcss": "4.3.3",
+    "vite": "8.3.3",
+    "yaml": "^2.9.1"
+  },
+  "trustedDependencies": [
+    "agent-browser",
+    "lefthook"
+  ],
+  "version": "2.2.6",
+  "author": "William R. J. Ribeiro",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/williamrjribeiro/resume"
+  }
 }

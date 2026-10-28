@@ -1,0 +1,3 @@
+# ripgrep (and tools built on it) skip git-ignored paths. Re-include the local
+# reference repositories so coding agents can search them.
+!/repos/

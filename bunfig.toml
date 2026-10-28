@@ -1,0 +1,5 @@
+[test]
+# Reference clones in repos/ ship their own test suites.
+pathIgnorePatterns = ["repos/**"]
+# Renders the site's Svelte components on the server (see test/setup.ts).
+preload = ["./test/setup.ts"]

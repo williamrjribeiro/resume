@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  // Formats the .svelte files. Needs the `svelte` package at runtime, which Oxfmt does not bundle.
+  "svelte": true,
+  // Sorts Tailwind classes against this project's theme (custom colours and breakpoints).
+  "sortTailwindcss": { "stylesheet": "./src/styles.css" },
+  "ignorePatterns": [
+    "repos/**",
+    "**/*.md",
+    "**/*.toml",
+    "**/*.html",
+    "bun.lock",
+    "**/*.yml",
+    "**/*.yaml",
+    "**/dist/**",
+    "build/**",
+    ".svelte-kit/**"
+  ]
+}
