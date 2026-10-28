@@ -1,0 +1,1 @@
+Use this Guitar Hero-style web app to play guitar tabs, and install it as a PWA. The app is a Bun monorepo in TypeScript with a SolidJS front end, and William built it with AI agents running in parallel Git worktrees. The repository also holds the Semantic Tab Format, which is a specification with a reference parser and validator, and a pure TypeScript player clock.
