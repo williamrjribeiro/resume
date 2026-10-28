@@ -8,4 +8,5 @@ export const writingStyles: ReadonlyArray<WritingStyle> = [
   { id: "asd-ste100", label: "Simplified Technical English (ASD-STE100)" },
   { id: "bob-ross", label: "Bob Ross" },
   { id: "business-writing", label: "Business writing" },
+  { id: "corporate-communication", label: "Corporate communication" },
 ];
