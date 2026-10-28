@@ -127,7 +127,7 @@ describe("llms", () => {
 
     it("lists every job and the organization it links to", () => {
       const jobs = llms.split("## Work Experience\n")[1]?.split("\n\n")[0]?.split("\n") ?? [];
-      expect(jobs).toHaveLength(8);
+      expect(jobs).toHaveLength(9);
       expect(llms).toContain(
         "[Principal Software Engineer at Hala Systems Inc.](https://www.halasystems.com/)",
       );

@@ -39,6 +39,7 @@ export const author: Author = {
     "Leadership",
     "Coaching & Mentoring",
     "Automated testing",
+    "AI-assisted development",
     "Public speaking",
     "AWS",
     "React",

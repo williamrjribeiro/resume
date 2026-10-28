@@ -49,6 +49,13 @@ My wife and I decided to do something extraordinary to celebrate our 30th birthd
 -   **Integration:** AI/ML model integration, ETL pipelines.
 -   **Domains:** Audio processing, large language models (LLMs) for semantic change detection, and geospatial data.
 
+#### Agentic Software Development
+
+-   **Tools:** Claude Code, Cursor (including cloud agents), Tessl, Beads
+-   **Workflows:** Spec-driven development (GSD), parallel agents in git worktrees, plan mode, model choice by task difficulty
+-   **Agent Evaluation:** Eval scenarios with weighted rubrics, blocking failures and adversarial cases
+-   **Agent Quality Gates:** Skills and hooks, pre-commit and CI parity, BDD with bun:test, Storybook, screenshot-based visual checks
+
 ### Soft Skills & Leadership
 
 #### Engineering Leadership

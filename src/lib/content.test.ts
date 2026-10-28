@@ -137,7 +137,7 @@ Part of an **Agile** team.`;
 
     it("all parse, with the front matter they need", () => {
       const counts = Object.values(resume?.entries ?? {}).map((entries) => entries.length);
-      expect(counts).toEqual([8, 2, 2, 4]);
+      expect(counts).toEqual([9, 2, 2, 4]);
     });
 
     it("end after they start", () => {

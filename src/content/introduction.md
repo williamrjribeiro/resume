@@ -7,3 +7,5 @@ title: About Me
 I’m a senior full-stack engineer with over 15 years of experience, specializing in connecting complex AI capabilities with user-friendly interfaces. Skilled in front-end development (React, TypeScript, Next.js), I focus on making AI accessible and relevant.
 
 From optimizing interfaces for humanitarian efforts in Syria to collaborating with researchers on audio processing, I balance technical skill with human empathy. I create applications that not only work seamlessly but also respond to user needs.
+
+I also keep learning how to build software with AI agents. I test new tools and workflows on real projects, measure what helps, and keep what works.

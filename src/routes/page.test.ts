@@ -36,7 +36,7 @@ describe("the page", () => {
     it("lists the jobs, the apps, the degrees and the volunteering as the résumé's h-events", () => {
       const resume = items[1];
       const count = (property: string) => (resume?.properties[property] ?? []).length;
-      expect(count("experience")).toBe(8);
+      expect(count("experience")).toBe(9);
       expect(count("apps")).toBe(2);
       expect(count("education")).toBe(2);
       expect(count("volunteering")).toBe(4);
