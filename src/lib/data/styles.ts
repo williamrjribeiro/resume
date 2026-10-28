@@ -1,151 +1,191 @@
 import type { Theme, WritingStyle } from "../styles.ts";
 
-// Each theme is the palette of the character or the look of the style. Text must stay readable on it, which
-// src/lib/themes.test.ts checks: `primary` needs 4.5:1 on `paper`, `secondary` 3:1, and the two ends of the
-// gradient 3:1 against the white icons that sit on it.
+// A theme is the palette of a character, written the way Toon Tone describes palettes
+// (https://toontone.io/blog/memorable-character-color-palettes/): a few reviewed colour parts, in one of four
+// structures, one loud dominant colour, a two-colour split, a dark base with a small accent, or nearby muted
+// tones. Where that catalogue has the character (Shrek) or a fitting one (Sung Jinwoo, Maomao, Levi Ackerman,
+// Bluey, Mega Man, Batman), the parts are its own. For the others the parts are reviewed the same way, as HSB
+// values of the costume, and then kept apart from the text colours: a part keeps its hue and saturation and
+// loses brightness until the text on it reads.
+//
+// The roles: `primary` is the dominant part, `secondary` the next, `accent` and `highlight` the small ones, and
+// `sidebar` the dark stops of the moving gradient. src/lib/themes.test.ts checks the contrast of each role.
+
 const asd: Theme = {
-  // Aircraft documentation: navy panels, an amber warning light.
-  primary: "#1b3a6b",
+  // Aircraft manuals: a two-colour split (navy and Mega Man blue), a WARNING red and a CAUTION amber.
+  primary: "#3262a6",
   secondary: "#d97706",
-  gradientFrom: "#0f2547",
-  gradientTo: "#2f6db5",
+  accent: "#c62828",
+  highlight: "#5c94cc",
+  sidebar: ["#0f2547", "#3262a6", "#a32222", "#b45309"],
   paper: "#f7f9fc",
   tint: "#e3e9f2",
+  ink: "#1a2433",
 };
 const bobRoss: Theme = {
-  // The painter's palette: phthalo blue, alizarin crimson, sap green, Van Dyke brown, titanium white.
-  primary: "#0b5563",
-  secondary: "#a62639",
-  gradientFrom: "#4e7a1f",
-  gradientTo: "#7a4a21",
-  paper: "#fbfaf5",
-  tint: "#ece8dc",
+  // Dark base and paint accents: denim shirt, alizarin crimson, sap green, cadmium yellow, Van Dyke brown hair.
+  primary: "#385b8c",
+  secondary: "#b2243c",
+  accent: "#50783c",
+  highlight: "#d1b43f",
+  sidebar: ["#402a1d", "#385b8c", "#50783c", "#b2243c", "#a38a1c"],
+  paper: "#faf7ed",
+  tint: "#ece6d3",
+  ink: "#2b2118",
 };
 const business: Theme = {
-  // Boardroom navy with a muted gold.
-  primary: "#1c3557",
+  // Sung Jinwoo's dark base (#21242e, #222c47) with a blue accent (#3d8bd9), and a boardroom gold.
+  primary: "#1f3a6e",
   secondary: "#8a6d3b",
-  gradientFrom: "#0e1f38",
-  gradientTo: "#4a6a94",
+  accent: "#3d8bd9",
+  highlight: "#7d8590",
+  sidebar: ["#21242e", "#222c47", "#1f3a6e", "#3d8bd9"],
   paper: "#f8f9fb",
   tint: "#e6e9ee",
+  ink: "#1d2433",
 };
 const corporate: Theme = {
-  // A calm teal with a warm terracotta.
-  primary: "#0e6370",
+  // Maomao's nearby tones: forest (#29473b), teal (#518c86), lavender (#7c78b3), and a warm terracotta.
+  primary: "#2e6e69",
   secondary: "#d1603d",
-  gradientFrom: "#0a4a55",
-  gradientTo: "#3a9aa6",
+  accent: "#7c78b3",
+  highlight: "#518c86",
+  sidebar: ["#29473b", "#2e6e69", "#518c86", "#7c78b3", "#b0522f"],
   paper: "#f7fbfb",
   tint: "#e1eeee",
+  ink: "#1b2b28",
 };
 const googleDocs: Theme = {
-  // Google's blue, red and green, darkened until the text on them reads.
+  // Google's four colours, darkened until the text on them reads.
   primary: "#1967d2",
-  secondary: "#b06000",
-  gradientFrom: "#c5221f",
-  gradientTo: "#188038",
+  secondary: "#c5221f",
+  accent: "#f29900",
+  highlight: "#188038",
+  sidebar: ["#174ea6", "#c5221f", "#b06000", "#188038"],
   paper: "#ffffff",
   tint: "#e8f0fe",
+  ink: "#202124",
 };
 const govUk: Theme = {
-  // The GOV.UK palette: blue links, a red, dark blue and green, and the light grey of its pages.
+  // The GOV.UK palette: blue, red, green, orange, black, and the light grey of its pages.
   primary: "#1d70b8",
   secondary: "#d4351c",
-  gradientFrom: "#003078",
-  gradientTo: "#00703c",
+  accent: "#00703c",
+  highlight: "#f47738",
+  sidebar: ["#0b0c0c", "#003078", "#1d70b8", "#00703c"],
   paper: "#ffffff",
   tint: "#f3f2f1",
+  ink: "#0b0c0c",
 };
 const jackSparrow: Theme = {
-  // Black sails, leather, a bandana red, old gold, parchment.
-  primary: "#5b3a1e",
-  secondary: "#a67c00",
-  gradientFrom: "#111111",
-  gradientTo: "#8b1a1a",
-  paper: "#fbf7ef",
-  tint: "#ebdfc7",
+  // Dark base with small accents: coat (#241d19), bandana red, gold trinkets, Caribbean sea green.
+  primary: "#b22428",
+  secondary: "#ab8933",
+  accent: "#cca43d",
+  highlight: "#2e6658",
+  sidebar: ["#241d19", "#b22428", "#b28f36", "#2e6658"],
+  paper: "#faf5ed",
+  tint: "#ece1cd",
+  ink: "#2b261c",
 };
 const ap: Theme = {
-  // Newsprint: black ink, a wire-service red.
+  // Newsprint: Deadpool's red against black, Batman's charcoal (#676d73), and a wire-service blue.
   primary: "#c8102e",
   secondary: "#1a1a1a",
-  gradientFrom: "#111111",
-  gradientTo: "#6b0f1a",
+  accent: "#676d73",
+  highlight: "#1f5fa8",
+  sidebar: ["#111111", "#676d73", "#c8102e", "#6b0f1a"],
   paper: "#fdfcf8",
   tint: "#eeeeee",
+  ink: "#111111",
 };
 const orwell: Theme = {
-  // A drab slate and the red of a poster on a wall.
-  primary: "#3b4754",
+  // Levi Ackerman's muted tones: olive (#4a593c), brown (#7a634c), bone (#e0daca), and a poster red.
+  primary: "#4a593c",
   secondary: "#a4161a",
-  gradientFrom: "#1f2328",
-  gradientTo: "#7d1d20",
+  accent: "#7a634c",
+  highlight: "#b89b5e",
+  sidebar: ["#1f2328", "#4a593c", "#7a634c", "#a4161a", "#8c7438"],
   paper: "#f5f4f1",
-  tint: "#e1ded8",
+  tint: "#e0daca",
+  ink: "#22251f",
 };
 const paddington: Theme = {
-  // The red hat, the brown duffle coat and fur, the marmalade, a cream page.
-  primary: "#b01c2e",
-  secondary: "#8b5a2b",
-  gradientFrom: "#5c3a1e",
-  gradientTo: "#b4551a",
-  paper: "#fffaf3",
-  tint: "#f0e3d2",
+  // A two-colour split and more: the red hat, the blue duffle coat, the brown fur, the marmalade.
+  primary: "#b22430",
+  secondary: "#613d1d",
+  accent: "#2c5894",
+  highlight: "#d18a1f",
+  sidebar: ["#613d1d", "#b22430", "#2c5894", "#c9851e", "#3f2a15"],
+  paper: "#fcf6ee",
+  tint: "#ece0cf",
+  ink: "#2a1c12",
 };
 const plain: Theme = {
-  // A clear blue with a friendly green.
-  primary: "#2a5ea8",
-  secondary: "#3a9d6e",
-  gradientFrom: "#1b3f73",
-  gradientTo: "#3a9d6e",
-  paper: "#fafcff",
-  tint: "#e5ecf6",
+  // Bluey's blue (#5995b3) and sand (#d9ad82), with the blue darkened for text.
+  primary: "#2a6f93",
+  secondary: "#b8742b",
+  accent: "#5995b3",
+  highlight: "#d9ad82",
+  sidebar: ["#1d4f6b", "#2a6f93", "#5995b3", "#b8742b", "#a67f4b"],
+  paper: "#f9fcfe",
+  tint: "#e4eef4",
+  ink: "#1c2a33",
 };
 const scottAdams: Theme = {
-  // The Dilbert strip: office orange and navy on the beige of a cubicle.
-  primary: "#c2410c",
-  secondary: "#1f3a5f",
-  gradientFrom: "#7c2d12",
-  gradientTo: "#d9731a",
-  paper: "#faf6ee",
-  tint: "#eadfc8",
+  // The Dilbert strip's office: a dark base with an orange accent, blue shirts, cubicle gray and beige.
+  primary: "#2e4c73",
+  secondary: "#d9742b",
+  accent: "#e67a2e",
+  highlight: "#b9a77c",
+  sidebar: ["#242629", "#2e4c73", "#e0782d", "#7e8c88"],
+  paper: "#faf6ed",
+  tint: "#ebe0ca",
+  ink: "#262a31",
 };
 const shrek: Theme = {
-  // Ogre green, the brown of the vest, swamp light.
-  primary: "#3d7a0a",
-  secondary: "#7a4a1f",
-  gradientFrom: "#24400f",
-  gradientTo: "#6b9b1f",
-  paper: "#f7faef",
-  tint: "#e2ebcf",
+  // Shrek in the catalogue: green (#4f8c31) and brown (#66523d), with the tunic's gold.
+  primary: "#477d2c",
+  secondary: "#66523d",
+  accent: "#4f8c31",
+  highlight: "#c8a24a",
+  sidebar: ["#2a4a14", "#4f8c31", "#66523d", "#a69356"],
+  paper: "#f5faed",
+  tint: "#e0ecd0",
+  ink: "#252b1c",
 };
 const tedLasso: Theme = {
-  // AFC Richmond's sky blue and navy, and the gold of the "Believe" sign.
-  primary: "#0f4c8a",
-  secondary: "#a67c00",
-  gradientFrom: "#0a2d57",
-  gradientTo: "#3c8fd4",
-  paper: "#f8fbff",
-  tint: "#e2edf8",
+  // A two-colour split: Richmond sky blue and navy, and the yellow of the "Believe" sign.
+  primary: "#3b72a8",
+  secondary: "#a18a18",
+  accent: "#4c92d9",
+  highlight: "#d4b300",
+  sidebar: ["#143666", "#4c92d9", "#ab931a", "#0f2a52"],
+  paper: "#edf4fa",
+  tint: "#d6e4f1",
+  ink: "#1c242b",
 };
 const pooh: Theme = {
-  // The red shirt and honey, on a honey-cream page.
-  primary: "#b0301f",
-  secondary: "#b7791f",
-  gradientFrom: "#8f2418",
-  gradientTo: "#c27d0e",
-  paper: "#fffaec",
-  tint: "#f6e8c3",
+  // A two-colour split: the red shirt and the honey, with the honey pot's brown and the Hundred Acre green.
+  primary: "#cc271f",
+  secondary: "#bd8413",
+  accent: "#e6a117",
+  highlight: "#5d8c4d",
+  sidebar: ["#734e34", "#cc271f", "#c48914", "#5d8c4d"],
+  paper: "#fff9ea",
+  tint: "#f1e6c8",
+  ink: "#2b271c",
 };
 const yoda: Theme = {
-  // Yoda's green skin and the tan of his robe.
-  primary: "#3a7d4e",
-  secondary: "#9c7a4c",
-  gradientFrom: "#1f4d33",
-  gradientTo: "#6f9f5f",
-  paper: "#f6faf4",
-  tint: "#e1ecdc",
+  // Nearby muted tones with a small accent: sage skin, robe tan and brown, and the lightsaber's green.
+  primary: "#4f7a3a",
+  secondary: "#7a5d43",
+  accent: "#8ea66c",
+  highlight: "#1dbf2a",
+  sidebar: ["#1a2a1d", "#4f7a3a", "#859c65", "#7a5d43", "#1aab26"],
+  paper: "#f4faf0",
+  tint: "#e0eed7",
+  ink: "#212b1c",
 };
 
 /**

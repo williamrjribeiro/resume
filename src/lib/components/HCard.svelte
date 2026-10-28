@@ -26,7 +26,7 @@
     type="button"
     onclick={scrollToTop}
     aria-label={strings.labels.scrollToTop}
-    class="mr-8 size-44 shrink-0 cursor-pointer overflow-hidden rounded-full border-[5px] border-white bg-transparent p-0 shadow-elevated max-md:mx-auto max-md:transition-all max-md:group-data-scrolled:fixed max-md:group-data-scrolled:top-0 max-md:group-data-scrolled:-right-10 max-md:group-data-scrolled:z-10 max-md:group-data-scrolled:-translate-y-10 max-md:group-data-scrolled:scale-50 lg:fixed lg:top-[calc(2rem+1rem)] lg:right-3/4 lg:m-0 lg:translate-x-1/4 lg:transition-transform lg:group-data-scrolled:scale-75 print:static! print:m-0! print:size-[18mm]! print:translate-x-0! print:scale-100! print:border-0!"
+    class="avatar mr-8 size-44 shrink-0 cursor-pointer overflow-hidden rounded-full border-[5px] border-white bg-transparent p-0 shadow-elevated max-md:mx-auto max-md:transition-all max-md:group-data-scrolled:fixed max-md:group-data-scrolled:top-0 max-md:group-data-scrolled:-right-10 max-md:group-data-scrolled:z-10 max-md:group-data-scrolled:-translate-y-10 max-md:group-data-scrolled:scale-50 lg:fixed lg:top-[calc(2rem+1rem)] lg:right-3/4 lg:m-0 lg:translate-x-1/4 lg:transition-transform lg:group-data-scrolled:scale-75 print:static! print:m-0! print:size-[18mm]! print:translate-x-0! print:scale-100! print:border-0!"
   >
     <!-- WebP where the browser can show it. The JPEG is the fallback, and is the `u-photo` that parsers read. -->
     <picture class="contents">

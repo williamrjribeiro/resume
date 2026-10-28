@@ -12,7 +12,7 @@
 
 <!-- The left column on wide screens; a band above the footer on narrow ones. -->
 <aside
-  class="animate-drift bg-primary bg-[linear-gradient(230deg,var(--color-gradient-from),var(--color-primary),var(--color-gradient-to))] bg-size-[300%_300%] lg:col-start-1 lg:row-span-3 lg:row-start-1 print:hidden"
+  class="animate-drift bg-primary bg-(image:--sidebar-gradient) bg-size-[300%_300%] lg:col-start-1 lg:row-span-3 lg:row-start-1 print:hidden"
 >
   <div class="gutter">
     <div

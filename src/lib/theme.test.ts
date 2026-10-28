@@ -5,27 +5,41 @@ import { applyTheme, themeVariables } from "./theme.ts";
 
 describe("theme", () => {
   const green: Theme = {
-    primary: "#3a7d4e",
-    secondary: "#9c7a4c",
-    gradientFrom: "#1f4d33",
-    gradientTo: "#6f9f5f",
-    paper: "#f6faf4",
-    tint: "#e1ecdc",
+    primary: "#4f7a3a",
+    secondary: "#7a5d43",
+    accent: "#8ea66c",
+    highlight: "#1dbf2a",
+    sidebar: ["#1a2a1d", "#4f7a3a", "#7a5d43"],
+    paper: "#f4faf0",
+    tint: "#e0eed7",
+    ink: "#212b1c",
   };
 
   const page = () => {
     const properties = new Map<string, string>();
     const attributes = new Map<string, string>();
+    const flags = new Set<string>();
     return {
       properties,
       attributes,
+      flags,
       targets: {
         root: {
-          setProperty: (name: string, value: string) => void properties.set(name, value),
-          removeProperty: (name: string) => {
-            const old = properties.get(name) ?? "";
-            properties.delete(name);
-            return old;
+          style: {
+            setProperty: (name: string, value: string) => void properties.set(name, value),
+            removeProperty: (name: string) => {
+              const old = properties.get(name) ?? "";
+              properties.delete(name);
+              return old;
+            },
+          },
+          toggleAttribute: (name: string, force?: boolean) => {
+            if (force) {
+              flags.add(name);
+            } else {
+              flags.delete(name);
+            }
+            return force ?? false;
           },
         },
         themeColor: {
@@ -35,46 +49,68 @@ describe("theme", () => {
     };
   };
 
-  describe("applyTheme", () => {
-    it("sets each colour of the theme as the CSS variable the style sheet uses", () => {
-      const { properties, targets } = page();
-      applyTheme(targets, green);
-      expect(Object.fromEntries(properties)).toEqual({
-        "--color-primary": "#3a7d4e",
-        "--color-secondary": "#9c7a4c",
-        "--color-gradient-from": "#1f4d33",
-        "--color-gradient-to": "#6f9f5f",
-        "--color-paper": "#f6faf4",
-        "--color-gray-light": "#e1ecdc",
+  describe("themeVariables", () => {
+    it("maps each colour of the theme to the CSS variable the style sheet uses", () => {
+      expect(themeVariables(green)).toMatchObject({
+        "--color-primary": "#4f7a3a",
+        "--color-secondary": "#7a5d43",
+        "--color-accent": "#8ea66c",
+        "--color-highlight": "#1dbf2a",
+        "--color-paper": "#f4faf0",
+        "--color-gray-light": "#e0eed7",
+        "--color-ink": "#212b1c",
       });
+    });
+
+    it("builds the sidebar's gradient from every stop, in order", () => {
+      expect(themeVariables(green)["--sidebar-gradient"]).toBe(
+        "linear-gradient(230deg, #1a2a1d, #4f7a3a, #7a5d43)",
+      );
+    });
+
+    it("builds a stripe from the four colours that make the character recognizable", () => {
+      expect(themeVariables(green)["--palette-stripe"]).toBe(
+        "linear-gradient(90deg, #4f7a3a, #7a5d43, #8ea66c, #1dbf2a)",
+      );
+    });
+  });
+
+  describe("applyTheme", () => {
+    it("sets every variable of the theme on the page and marks the page as themed", () => {
+      const { properties, flags, targets } = page();
+      applyTheme(targets, green);
+      expect(Object.fromEntries(properties)).toEqual(themeVariables(green));
+      expect(flags.has("data-themed")).toBe(true);
     });
 
     it("tells the browser the primary colour, for its address bar", () => {
       const { attributes, targets } = page();
       applyTheme(targets, green);
-      expect(attributes.get("content")).toBe("#3a7d4e");
+      expect(attributes.get("content")).toBe("#4f7a3a");
     });
 
     it("leaves the style sheet's own colours when the theme is the original's", () => {
-      const { properties, attributes, targets } = page();
+      const { properties, flags, attributes, targets } = page();
       applyTheme(targets, green);
       applyTheme(targets, originalTheme);
       expect(properties.size).toBe(0);
+      expect(flags.has("data-themed")).toBe(false);
       expect(attributes.get("content")).toBe(originalTheme.primary);
     });
 
     it("copes with a page that has no theme-color tag", () => {
       const { properties, targets } = page();
       applyTheme({ ...targets, themeColor: null }, green);
-      expect(properties.get("--color-primary")).toBe("#3a7d4e");
+      expect(properties.get("--color-primary")).toBe("#4f7a3a");
     });
   });
 
   describe("the style sheet", () => {
-    it("declares every variable of a theme, with the original's colour", async () => {
+    it("declares the original's colours, so the original needs no theme set on the page", async () => {
       const css = await Bun.file(`${import.meta.dir}/../styles.css`).text();
-      for (const [key, variable] of Object.entries(themeVariables)) {
-        expect(css, variable).toContain(`${variable}: ${originalTheme[key as keyof Theme]};`);
+      const { "--palette-stripe": _stripe, ...original } = themeVariables(originalTheme);
+      for (const [variable, value] of Object.entries(original)) {
+        expect(css, variable).toContain(`${variable}: ${value}`);
       }
     });
   });

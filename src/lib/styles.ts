@@ -1,18 +1,25 @@
 import type { Entry, Page, Resume } from "./content.ts";
 
-/** The colours of the page. Each one replaces a CSS variable, see `src/lib/theme.ts`. */
+/**
+ * The colours of the page, as the reviewed parts of a character: a few colours that make it recognizable, and
+ * the dark and light tones that carry the text. Each one replaces a CSS variable, see `src/lib/theme.ts`.
+ */
 export interface Theme {
-  /** Links, headings in print, the middle of the sidebar's gradient. Needs 4.5:1 on `paper`. */
+  /** Links and small headings. Needs 4.5:1 on `paper`, and white text on it 4.5:1. */
   readonly primary: string;
-  /** Markers, the focus outline. Needs 3:1 on `paper`. */
+  /** The focus outline, and markers. Needs 3:1 on `paper`. */
   readonly secondary: string;
-  /** The two ends of the sidebar's moving gradient. Icons on it are white, so they need 3:1. */
-  readonly gradientFrom: string;
-  readonly gradientTo: string;
+  /** Markers and underlines. Decorative, but still has to show on `paper` (1.5:1). */
+  readonly accent: string;
+  readonly highlight: string;
+  /** The stops of the sidebar's moving gradient. Icons on it are white, so each needs 3:1 against white. */
+  readonly sidebar: ReadonlyArray<string>;
   /** The background of the page. */
   readonly paper: string;
   /** The background of the footer. */
   readonly tint: string;
+  /** The text. Needs 7:1 on `paper` and on `tint`. */
+  readonly ink: string;
 }
 
 /** A way of writing the résumé, such as "Yoda", with the colours of its character. */
@@ -26,10 +33,12 @@ export interface WritingStyle {
 export const originalTheme: Theme = {
   primary: "#005b96",
   secondary: "#fc6767",
-  gradientFrom: "#a24bcf",
-  gradientTo: "#4bc5cf",
+  accent: "#4bc5cf",
+  highlight: "#a24bcf",
+  sidebar: ["#a24bcf", "#005b96", "#4bc5cf"],
   paper: "#ffffff",
   tint: "#eceeef",
+  ink: "#373a3c",
 };
 
 /** The résumé as it is written in `src/content`. It is what the page shows first. */

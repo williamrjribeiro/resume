@@ -37,7 +37,7 @@
   $effect(() => {
     applyTheme(
       {
-        root: document.documentElement.style,
+        root: document.documentElement,
         themeColor: document.querySelector('meta[name="theme-color"]'),
       },
       theme,

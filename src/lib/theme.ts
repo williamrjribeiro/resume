@@ -1,32 +1,43 @@
 import { originalTheme, type Theme } from "./styles.ts";
 
-/** The CSS variable each colour of a theme replaces, as `src/styles.css` declares them. */
-export const themeVariables = {
-  primary: "--color-primary",
-  secondary: "--color-secondary",
-  gradientFrom: "--color-gradient-from",
-  gradientTo: "--color-gradient-to",
-  paper: "--color-paper",
-  tint: "--color-gray-light",
-} as const satisfies Record<keyof Theme, string>;
+/** The CSS variables a theme sets, with their values. `src/styles.css` declares the original's. */
+export function themeVariables(theme: Theme): Record<string, string> {
+  return {
+    "--color-primary": theme.primary,
+    "--color-secondary": theme.secondary,
+    "--color-accent": theme.accent,
+    "--color-highlight": theme.highlight,
+    "--color-paper": theme.paper,
+    "--color-gray-light": theme.tint,
+    "--color-ink": theme.ink,
+    "--sidebar-gradient": `linear-gradient(230deg, ${theme.sidebar.join(", ")})`,
+    "--palette-stripe": `linear-gradient(90deg, ${[theme.primary, theme.secondary, theme.accent, theme.highlight].join(", ")})`,
+  };
+}
 
-/** The two things of the page that colours reach without CSS: its root element and the browser's `theme-color`. */
+/** The things of the page that colours reach: its root element, and the browser's `theme-color`. */
 export interface ThemeTargets {
-  readonly root: Pick<CSSStyleDeclaration, "setProperty" | "removeProperty">;
+  readonly root: {
+    readonly style: Pick<CSSStyleDeclaration, "setProperty" | "removeProperty">;
+    toggleAttribute(name: string, force?: boolean): boolean;
+  };
   readonly themeColor: { setAttribute(name: string, value: string): void } | null;
 }
 
 /**
- * Puts a theme on the page. The original theme removes what an earlier one set, which leaves the style sheet's
- * own colours, the ones the page was prerendered with.
+ * Puts a theme on the page, and marks the page `data-themed`, which switches on the extra colours in the style
+ * sheet. The original theme removes what an earlier one set, which leaves the style sheet's own colours: the ones
+ * the page was prerendered with.
  */
 export function applyTheme({ root, themeColor }: ThemeTargets, theme: Theme): void {
-  for (const [key, variable] of Object.entries(themeVariables)) {
-    if (theme === originalTheme) {
-      root.removeProperty(variable);
+  const themed = theme !== originalTheme;
+  for (const [variable, value] of Object.entries(themeVariables(theme))) {
+    if (themed) {
+      root.style.setProperty(variable, value);
     } else {
-      root.setProperty(variable, theme[key as keyof Theme]);
+      root.style.removeProperty(variable);
     }
   }
+  root.toggleAttribute("data-themed", themed);
   themeColor?.setAttribute("content", theme.primary);
 }
