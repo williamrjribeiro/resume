@@ -3,7 +3,7 @@ import { afterAll, beforeAll, describe, expect, it } from "bun:test";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { brotliDecompressSync, gunzipSync } from "node:zlib";
+import { brotliDecompressSync, gunzipSync, gzipSync } from "node:zlib";
 import { ensureCerts } from "./certs.ts";
 import {
   createStaticHandler,
@@ -109,6 +109,12 @@ describe("static-server", () => {
       const response = await get("/index.html", "gzip");
       expect(response.headers.get("content-encoding")).toBe("gzip");
       expect(decompress(await response.arrayBuffer(), "gzip")).toBe(page);
+    });
+
+    it("makes gzip files no bigger than zlib's best", async () => {
+      const response = await get("/index.html", "gzip");
+      const bytes = (await response.arrayBuffer()).byteLength;
+      expect(bytes).toBeLessThanOrEqual(gzipSync(page, { level: 9 }).byteLength);
     });
 
     it("sends the file as it is to a client that accepts no encoding, but still varies", async () => {

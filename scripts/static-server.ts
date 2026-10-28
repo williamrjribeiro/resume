@@ -8,7 +8,7 @@
  */
 
 import { promisify } from "node:util";
-import { brotliCompress, constants, gzip } from "node:zlib";
+import { brotliCompress, constants } from "node:zlib";
 
 /** The `Content-Encoding` values this server can produce, from the most to the least preferred. */
 export type Encoding = "br" | "gzip";
@@ -19,7 +19,6 @@ const PREFERRED_ENCODINGS: ReadonlyArray<Encoding> = ["br", "gzip"];
 const MIN_COMPRESSIBLE_BYTES = 256;
 
 const brotli = promisify(brotliCompress);
-const gzipAsync = promisify(gzip);
 
 /**
  * The best encoding a request accepts, or `undefined` to send the file as it is. Follows the
@@ -60,19 +59,20 @@ export const isCompressible = (contentType: string): boolean => {
 };
 
 /**
- * Compresses at the best quality (brotli 11, gzip 9): the cost is paid once per file, not once per
- * request. Both run off the main thread, so a big file does not stall the server.
+ * Compresses at the best quality, which is paid once per file, not once per request.
+ *
+ * Brotli (quality 11) has no `Bun` function, so it comes from `node:zlib`, whose async version runs
+ * off the main thread: at this quality a big file takes seconds. Gzip is `Bun.gzipSync` with
+ * libdeflate at its best level (12), which makes smaller files than zlib's best and is fast enough
+ * to run on the main thread: a few milliseconds for the files of a site.
  */
 const compress = async (
-  bytes: Uint8Array,
+  bytes: Uint8Array<ArrayBuffer>,
   encoding: Encoding,
-): Promise<Uint8Array<ArrayBuffer>> => {
-  const compressed =
-    encoding === "br"
-      ? await brotli(bytes, { params: { [constants.BROTLI_PARAM_QUALITY]: 11 } })
-      : await gzipAsync(bytes, { level: 9 });
-  return new Uint8Array(compressed);
-};
+): Promise<Uint8Array<ArrayBuffer>> =>
+  encoding === "gzip"
+    ? Bun.gzipSync(bytes, { library: "libdeflate", level: 12 })
+    : new Uint8Array(await brotli(bytes, { params: { [constants.BROTLI_PARAM_QUALITY]: 11 } }));
 
 const cacheControl = (pathname: string): string =>
   pathname.startsWith("/assets/") ? "public, max-age=31536000, immutable" : "no-cache";
