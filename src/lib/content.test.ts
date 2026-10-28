@@ -52,6 +52,7 @@ Part of an **Agile** team.`;
         organizationUrl: "https://www.tricode.nl/",
         location: "Veenendaal, NL",
         printHidden: true,
+        markdown: "Part of an **Agile** team.",
         html: "<p>Part of an <strong>Agile</strong> team.</p>\n",
       });
     });
@@ -68,6 +69,7 @@ Part of an **Agile** team.`;
         title: "T",
         start: "2021-03-20",
         printHidden: false,
+        markdown: "",
         html: "",
       });
       expect("end" in entry).toBe(false);
@@ -91,6 +93,7 @@ Part of an **Agile** team.`;
       expect(parsePage("/src/content/introduction.md", "---\ntitle: About Me\n---\nHello")).toEqual(
         {
           title: "About Me",
+          markdown: "Hello",
           html: "<p>Hello</p>\n",
         },
       );

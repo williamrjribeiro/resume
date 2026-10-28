@@ -20,6 +20,8 @@ export interface Entry {
   readonly storeUrl?: string;
   /** Left out of the printed résumé. */
   readonly printHidden: boolean;
+  /** The Markdown body as written. Empty when the entry has none. */
+  readonly markdown: string;
   /** The Markdown body, rendered. Empty when the entry has none. */
   readonly html: string;
 }
@@ -27,6 +29,7 @@ export interface Entry {
 /** A free-form block of Markdown with a heading, such as "About Me". */
 export interface Page {
   readonly title: string;
+  readonly markdown: string;
   readonly html: string;
 }
 
@@ -100,13 +103,18 @@ export function parseEntry(kind: EntryKind, path: string, raw: string): Entry {
     ...(sourceCodeUrl === undefined ? {} : { sourceCodeUrl }),
     ...(storeUrl === undefined ? {} : { storeUrl }),
     printHidden: data["printHidden"] === true,
+    markdown: body.trim(),
     html: renderMarkdown(body),
   };
 }
 
 export function parsePage(path: string, raw: string): Page {
   const { data, body } = splitFrontmatter(raw);
-  return { title: requiredText(data, "title", path), html: renderMarkdown(body) };
+  return {
+    title: requiredText(data, "title", path),
+    markdown: body.trim(),
+    html: renderMarkdown(body),
+  };
 }
 
 /** Newest first. */

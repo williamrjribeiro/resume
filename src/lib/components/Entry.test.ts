@@ -16,6 +16,7 @@ describe("Entry", () => {
     organizationUrl: "https://www.tricode.nl/",
     location: "Veenendaal, NL",
     printHidden: false,
+    markdown: "Part of an **Agile** team.",
     html: "<p>Part of an <strong>Agile</strong> team.</p>",
   };
   const app: Entry = {
@@ -27,6 +28,7 @@ describe("Entry", () => {
     sourceCodeUrl: "https://github.com/x/wappy",
     storeUrl: "https://store.example/wappy",
     printHidden: false,
+    markdown: "",
     html: "",
   };
   const render = (entry: Entry) => renderComponent(EntryComponent, { entry }).body;

@@ -31,6 +31,11 @@ describe("Head", () => {
     expect(head).toContain('href="./site.webmanifest"');
   });
 
+  it("points agents at the Markdown résumé and at llms.txt", () => {
+    expect(head).toContain('<link rel="alternate" type="text/markdown" href="./index.html.md"');
+    expect(head).toContain('<link rel="describedby" href="./llms.txt"');
+  });
+
   it("has the theme colour", () => {
     expect(meta("name", "theme-color")).toBe(site.colors.primary);
   });

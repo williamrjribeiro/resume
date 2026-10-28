@@ -12,6 +12,7 @@ describe("EntryList", () => {
     title,
     start: "2020-01-01",
     printHidden: false,
+    markdown: "",
     html: "",
     ...overrides,
   });

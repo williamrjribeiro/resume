@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { asset } from "$app/paths";
+  import { asset, resolve } from "$app/paths";
   import { author } from "#lib/data/author.ts";
   import { site } from "#lib/data/site.ts";
   import { jsonLdScript } from "#lib/json-ld.ts";
@@ -35,6 +35,11 @@
   <link rel="icon" type="image/png" sizes="16x16" href={asset("favicon/favicon-16x16.png")} />
   <link rel="shortcut icon" href={asset("favicon/favicon.ico")} />
   <link rel="manifest" href={asset("site.webmanifest")} />
+
+  <!-- The same résumé for agents (https://llmstxt.org): as Markdown, and the llms.txt that describes the site. -->
+  <link rel="alternate" type="text/markdown" href={resolve("/index.html.md")} />
+  <link rel="describedby" href={resolve("/llms.txt")} />
+
   <link rel="mask-icon" href={asset("favicon/safari-pinned-tab.svg")} color={site.colors.primary} />
   <meta name="theme-color" content={site.colors.primary} />
 

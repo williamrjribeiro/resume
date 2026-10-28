@@ -31,6 +31,13 @@ The tooling comes from the `bun-agentic-starter` template; see [AGENTS.md](./AGE
 - The header is a top-level `h-card` with `u-url` equal to `u-uid`, which is how parsers find the representative h-card of the page. Social links are `rel="me"`.
 - The résumé itself is an `h-resume` whose jobs, degrees and apps are `h-event` items, each with its organisation as a nested `p-org h-card`.
 
+## For agents
+
+- `/llms.txt` follows [llmstxt.org](https://llmstxt.org): the name, a summary, the introduction, and lists of links to the jobs, profiles and everything else. `/index.html.md` is the whole résumé as Markdown, which is what the spec calls the Markdown copy of the page at `/`.
+- Both are made when the site is built, from the same data as the page ([src/lib/llms.ts](./src/lib/llms.ts)), so editing the content or `author.ts` updates them too. The page links to them from its `<head>`.
+- They leave out the email address and the telephone number: the page writes the email address as HTML entities to keep it from scrapers, and a plain-text file made for crawlers would undo that.
+- Lighthouse's `llms-txt` audit (the *agentic browsing* category, Lighthouse 13.6 or later) checks the file: `bunx lighthouse https://localhost:4173/ --only-categories=agentic-browsing`.
+
 ## Release
 
 Pages are deployed from version tags, never from branches:
