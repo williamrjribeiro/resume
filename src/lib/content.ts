@@ -1,5 +1,6 @@
 import { marked } from "marked";
 import { parse as parseYaml } from "yaml";
+import { entryKey, type StyledResume, type StyledText } from "./styles.ts";
 
 export const entryKinds = ["work", "apps", "education", "volunteering"] as const;
 export type EntryKind = (typeof entryKinds)[number];
@@ -153,4 +154,59 @@ export function buildResume(sources: Readonly<Record<string, string>>): Resume {
     list.sort(byStartDescending);
   }
   return { introduction, gapYear, entries };
+}
+
+/**
+ * Builds the text of one writing style from Markdown sources keyed by path, as `import.meta.glob` returns them:
+ * `/src/content/styles/yoda/introduction.md`, `/src/content/styles/yoda/work/2017-talkdesk.md`, ...
+ * A style has a file for the introduction, the gap year and every entry that has a text, and for nothing else.
+ */
+export function buildStyle(
+  resume: Resume,
+  id: string,
+  sources: Readonly<Record<string, string>>,
+): StyledResume {
+  const prefix = `/src/content/styles/${id}/`;
+  const texts = new Map<string, StyledText>();
+  for (const [path, raw] of Object.entries(sources)) {
+    if (path.startsWith(prefix)) {
+      const { body } = splitFrontmatter(raw);
+      texts.set(path.slice(prefix.length).replace(/\.md$/, ""), {
+        markdown: body.trim(),
+        html: renderMarkdown(body),
+      });
+    }
+  }
+
+  const take = (key: string): StyledText => {
+    const text = texts.get(key);
+    if (text === undefined) {
+      throw new Error(`the "${id}" style needs ${key}.md`);
+    }
+    texts.delete(key);
+    return text;
+  };
+
+  const introduction = take("introduction");
+  const gapYear = take("gap-year");
+  const entries: Record<string, StyledText> = {};
+  for (const entry of Object.values(resume.entries).flat()) {
+    if (entry.markdown !== "") {
+      const key = entryKey(entry);
+      entries[key] = take(key);
+    }
+  }
+  for (const key of texts.keys()) {
+    throw new Error(`the "${id}" style has ${key}.md, which matches nothing in the résumé`);
+  }
+  return { introduction, gapYear, entries };
+}
+
+/** The text of each of the styles `ids`, keyed by id. */
+export function buildStyles(
+  resume: Resume,
+  ids: ReadonlyArray<string>,
+  sources: Readonly<Record<string, string>>,
+): Readonly<Record<string, StyledResume>> {
+  return Object.fromEntries(ids.map((id) => [id, buildStyle(resume, id, sources)]));
 }

@@ -103,6 +103,18 @@ describe("the page", () => {
     });
   });
 
+  describe("writing styles", () => {
+    it("lets the visitor pick one, starting with the original", () => {
+      expect(body).toContain('<select id="writing-style"');
+      expect(body).toMatch(/<option value="original" selected/);
+      expect(body).toContain("Original");
+    });
+
+    it("keeps the picker out of the printed résumé", () => {
+      expect(body).toMatch(/<div class="[^"]*print:hidden[^"]*">\s*<label for="writing-style"/);
+    });
+  });
+
   describe("footer", () => {
     it("says when the site was built", () => {
       expect(body).toContain("Last updated: 27.10.2026");

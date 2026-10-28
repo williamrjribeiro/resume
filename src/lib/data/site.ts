@@ -23,5 +23,8 @@ export const strings = {
     sourceCode: "Source",
     appStore: "Store",
     scrollToTop: "Scroll to top",
+    writingStyle: "Writing style",
+    styleLoading: "Rewriting the résumé…",
+    styleFailed: "That style could not be loaded, so the original stays.",
   },
 } as const;

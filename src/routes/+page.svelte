@@ -5,12 +5,68 @@
   import Head from "#lib/components/Head.svelte";
   import Section from "#lib/components/Section.svelte";
   import Sidebar from "#lib/components/Sidebar.svelte";
+  import StylePicker from "#lib/components/StylePicker.svelte";
   import { author } from "#lib/data/author.ts";
   import { strings } from "#lib/data/site.ts";
+  import { writingStyles } from "#lib/data/styles.ts";
+  import { applyStyle, fetchStyle, originalStyle, type StyledResume } from "#lib/styles.ts";
+  import { goto } from "$app/navigation";
+  import { resolve } from "$app/paths";
+  import { onMount } from "svelte";
+  import { SvelteMap } from "svelte/reactivity";
   import type { load } from "./+page.server.ts";
 
   let { data }: { data: ReturnType<typeof load> } = $props();
-  const resume = $derived(data.resume);
+
+  // The page is prerendered in the original style. Another style replaces the text once its file is loaded.
+  const styles = [originalStyle, ...writingStyles];
+  const loaded = new SvelteMap<string, StyledResume>();
+  let styleId = $state(originalStyle.id);
+  let styleStatus = $state<"idle" | "loading" | "failed">("idle");
+  let ready = $state(false);
+  const resume = $derived.by(() => {
+    const style = loaded.get(styleId);
+    return style === undefined ? data.resume : applyStyle(data.resume, style);
+  });
+
+  async function chooseStyle(id: string): Promise<boolean> {
+    if (id === originalStyle.id || loaded.has(id)) {
+      styleId = id;
+      styleStatus = "idle";
+      return true;
+    }
+    styleStatus = "loading";
+    try {
+      loaded.set(id, await fetchStyle(resolve("/styles/[id].json", { id })));
+      styleId = id;
+      styleStatus = "idle";
+      return true;
+    } catch {
+      styleStatus = "failed";
+      return false;
+    }
+  }
+
+  // The address carries the choice (`?style=yoda`), so a link opens the résumé in that style.
+  async function pickStyle(id: string): Promise<void> {
+    if (await chooseStyle(id)) {
+      const url = new URL(location.href);
+      if (id === originalStyle.id) {
+        url.searchParams.delete("style");
+      } else {
+        url.searchParams.set("style", id);
+      }
+      await goto(url, { replace: true, shallow: true });
+    }
+  }
+
+  onMount(() => {
+    ready = true;
+    const id = new URLSearchParams(location.search).get("style");
+    if (id !== null && styles.some((style) => style.id === id)) {
+      void chooseStyle(id);
+    }
+  });
 
   // The avatar and the actions in the sidebar change once the page has been scrolled a little.
   const SCROLLED_AFTER = 200;
@@ -39,6 +95,14 @@
   >
     <div class="gutter">
       <HCard />
+      <StylePicker
+        {styles}
+        value={styleId}
+        disabled={!ready}
+        status={styleStatus}
+        onchange={pickStyle}
+        class="mt-6"
+      />
     </div>
   </header>
 
