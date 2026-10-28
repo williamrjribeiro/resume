@@ -1,0 +1,1 @@
+A contract-driven generator of TypeScript REST API applications that are ready for production. The generated projects follow Ports & Adapters and use OpenAPI 3.1, Zod, Hono, Drizzle ORM and PostgreSQL. It was spec-first: an RFC and a PRD before code, then a 90% coverage gate.

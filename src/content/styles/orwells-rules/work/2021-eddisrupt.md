@@ -1,0 +1,1 @@
+I am the ambassador of Eddisrupt. I promote its aim to disrupt the education sector with high-quality learning materials and mentoring programs at a price people can afford. I write about software engineering: blog posts, presentations and workshops. The best part is mentoring our students as they become good software engineers and apply for their first jobs in the industry.
