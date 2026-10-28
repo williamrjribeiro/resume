@@ -29,6 +29,8 @@ curl -sk --http1.1 -H 'accept-encoding: gzip' -o /dev/null -D - https://localhos
 curl -sk --http3 -I https://localhost:4173/   # needs a curl built with HTTP/3 support
 ```
 
+The server also sends the security headers a static host such as GitHub Pages cannot set (the page's CSP as a header, HSTS, COOP, X-Frame-Options), except HSTS to `localhost`. See [security.md](./security.md).
+
 In a browser, open the network panel and add the **Protocol** column (`h3`, `h2`) and look at **Content-Encoding** (`br`). Bun's own `fetch` can test one protocol at a time: `fetch(url, { protocol: "http3" })` fails instead of falling back.
 
 The certificate lives in `.certs/` (git-ignored; the private key is a secret, so never commit it). It names `localhost`, `127.0.0.1`, `::1`, this host (`host` and `host.local`) and the machine's current LAN IPv4 addresses, and is made again when those change. **Arch Linux only for now:** it reads addresses with `ip` (`iproute2`) and the trust steps below use `pacman`.

@@ -31,6 +31,10 @@ The tooling comes from the `bun-agentic-starter` template; see [AGENTS.md](./AGE
 - The header is a top-level `h-card` with `u-url` equal to `u-uid`, which is how parsers find the representative h-card of the page. Social links are `rel="me"`.
 - The résumé itself is an `h-resume` whose jobs, degrees and apps are `h-event` items, each with its organisation as a nested `p-org h-card`.
 
+## Security
+
+The page has a strict Content Security Policy with Trusted Types, and `bun run serve:https` adds the headers a static host such as GitHub Pages cannot set: the policy again with `frame-ancestors`, HSTS, COOP and X-Frame-Options. `bun run lighthouse` runs Lighthouse's best practices over the build and fails on any finding in the Trust and Safety section; `bun run check:security` checks the policy of the built pages. GitHub Pages cannot send headers, so a few findings remain there. See [docs/security.md](./docs/security.md).
+
 ## For agents
 
 - `/llms.txt` follows [llmstxt.org](https://llmstxt.org): the name, a summary, the introduction, and lists of links to the jobs, profiles and everything else. `/index.html.md` is the whole résumé as Markdown, which is what the spec calls the Markdown copy of the page at `/`.

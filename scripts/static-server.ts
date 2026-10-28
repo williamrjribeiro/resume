@@ -1,6 +1,7 @@
 /**
  * The file server behind `bun run serve:https`: HTTP/3, HTTP/2 and HTTP/1.1 on one port, and
- * brotli (or gzip) compression for the files that compress.
+ * brotli (or gzip) compression for the files that compress, and the security headers that a static host
+ * such as GitHub Pages cannot set (`security-headers.ts`).
  *
  * `Bun.serve` speaks the three protocols but does not compress responses, so compression is done
  * here. Static files do not change between requests, so each compressed file is made once and kept
@@ -9,6 +10,7 @@
 
 import { promisify } from "node:util";
 import { brotliCompress, constants } from "node:zlib";
+import { securityHeaders } from "./security-headers.ts";
 
 /** The `Content-Encoding` values this server can produce, from the most to the least preferred. */
 export type Encoding = "br" | "gzip";
@@ -114,7 +116,14 @@ export const createStaticHandler = ({ directory }: StaticHandlerOptions) => {
     pathname: string,
     cacheControlValue: string,
   ): Promise<Response> => {
-    const headers: Record<string, string> = { "cache-control": cacheControlValue };
+    const html = file.type.startsWith("text/html") ? await file.text() : undefined;
+    const headers: Record<string, string> = {
+      "cache-control": cacheControlValue,
+      ...securityHeaders({
+        hostname: new URL(request.url).hostname,
+        ...(html === undefined ? {} : { html }),
+      }),
+    };
     if (isCompressible(file.type) && file.size >= MIN_COMPRESSIBLE_BYTES) {
       // The same address answers differently depending on what the client accepts.
       headers["vary"] = "Accept-Encoding";

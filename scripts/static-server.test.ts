@@ -80,8 +80,12 @@ describe("static-server", () => {
         }),
       );
 
+    const secure = `<!doctype html><meta http-equiv="content-security-policy" content="default-src 'none'; script-src 'self' 'sha256-abc='"><title>x</title>${"<p>text</p>".repeat(50)}`;
+    const getFrom = (origin: string, path: string) => handle(new Request(`${origin}${path}`));
+
     beforeAll(() => {
       directory = mkdtempSync(join(tmpdir(), "static-server-"));
+      writeFileSync(join(directory, "secure.html"), secure);
       mkdirSync(join(directory, "assets"));
       writeFileSync(join(directory, "index.html"), page);
       writeFileSync(join(directory, "tiny.txt"), "tiny");
@@ -138,6 +142,42 @@ describe("static-server", () => {
       const after = decompress(await (await get("/changing.txt", "br")).arrayBuffer(), "brotli");
       expect(before).toBe("first ".repeat(100));
       expect(after).toBe("second ".repeat(120));
+    });
+
+    it("sends a page's own CSP as a header too, with frame-ancestors, which a meta tag cannot carry", async () => {
+      const response = await getFrom("https://127.0.0.1", "/secure.html");
+      expect(response.headers.get("content-security-policy")).toBe(
+        "default-src 'none'; script-src 'self' 'sha256-abc='; frame-ancestors 'none'",
+      );
+    });
+
+    it("sends the headers that isolate and protect the page", async () => {
+      const response = await getFrom("https://127.0.0.1", "/secure.html");
+      expect(response.headers.get("cross-origin-opener-policy")).toBe("same-origin");
+      expect(response.headers.get("x-frame-options")).toBe("DENY");
+      expect(response.headers.get("x-content-type-options")).toBe("nosniff");
+      expect(response.headers.get("strict-transport-security")).toContain("max-age=63072000");
+    });
+
+    it("sends them with the compressed copy as well", async () => {
+      const response = await handle(
+        new Request("https://127.0.0.1/secure.html", { headers: { "accept-encoding": "br" } }),
+      );
+      expect(response.headers.get("content-encoding")).toBe("br");
+      expect(response.headers.get("cross-origin-opener-policy")).toBe("same-origin");
+      expect(response.headers.get("content-security-policy")).toContain("frame-ancestors 'none'");
+    });
+
+    it("keeps HSTS off localhost, where it would break every http:// address", async () => {
+      const response = await getFrom("https://localhost", "/secure.html");
+      expect(response.headers.get("strict-transport-security")).toBeNull();
+      expect(response.headers.get("x-frame-options")).toBe("DENY");
+    });
+
+    it("sends no CSP with a file that is not a page, but the other headers", async () => {
+      const response = await getFrom("https://127.0.0.1", "/assets/app.js");
+      expect(response.headers.get("content-security-policy")).toBeNull();
+      expect(response.headers.get("cross-origin-opener-policy")).toBe("same-origin");
     });
 
     it("leaves images alone", async () => {
@@ -226,6 +266,16 @@ describe("static-server", () => {
       async (protocol) => {
         const response = await request(protocol);
         expect(response.headers.get("content-encoding")).toBe("br");
+      },
+    );
+
+    it.each(["http3", "http2", "http1.1"] as const)(
+      "sends the security headers over %s",
+      async (protocol) => {
+        const response = await request(protocol);
+        expect(response.headers.get("cross-origin-opener-policy")).toBe("same-origin");
+        expect(response.headers.get("x-frame-options")).toBe("DENY");
+        expect(response.headers.get("strict-transport-security")).toContain("includeSubDomains");
       },
     );
 

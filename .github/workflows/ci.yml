@@ -36,9 +36,15 @@ jobs:
       # The build is the site that would be deployed: its markup must carry the author's h-card.
       - name: Check the h-card
         run: bun run check:hcard
+      - name: Check the Content Security Policy
+        run: bun run check:security
       # Types and accessibility warnings in the .svelte files, which `bun check` cannot read.
       - name: Check the Svelte files
         run: bun run check:svelte
+      # Builds the site, serves it with the security headers and runs Lighthouse's best practices over it:
+      # nothing may be left in the Trust and Safety section.
+      - name: Lighthouse, Trust and Safety
+        run: bun run lighthouse
 
   # The commit-msg hook, for contributors who do not run it. It needs the
   # history of the pull request and no dependencies, so it runs beside `check`.
