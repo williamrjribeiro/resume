@@ -3,7 +3,14 @@ import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import { chmodSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { release, ReleaseError, repositoryOf, type Bump, type ReleaseOptions } from "./release.ts";
+import {
+  nextVersion,
+  release,
+  ReleaseError,
+  repositoryOf,
+  type Bump,
+  type ReleaseOptions,
+} from "./release.ts";
 
 // Real repositories in a temporary directory, away from the machine's git configuration and hooks.
 const env = {
@@ -67,6 +74,30 @@ describe("release", () => {
 
   afterEach(() => {
     rmSync(root, { recursive: true, force: true });
+  });
+
+  describe("nextVersion", () => {
+    it.each([
+      ["3.0.0", "patch", "3.0.1"],
+      ["3.0.0", "minor", "3.1.0"],
+      ["3.0.0", "major", "4.0.0"],
+      ["2.2.6", "major", "3.0.0"],
+      ["1.4.9", "minor", "1.5.0"],
+      ["1.9.9", "minor", "1.10.0"],
+      ["0.0.9", "patch", "0.0.10"],
+      ["1.2.3", "major", "2.0.0"],
+    ] as const)("%s %s is %s", (current, bump, expected) => {
+      expect(nextVersion(current, bump)).toBe(expected);
+    });
+
+    it.each(["3.0.0-rc.1", "3.0", "3", "v3.0.0", "3.0.0+build", "", "three"])(
+      "refuses %j, which is not a plain X.Y.Z version",
+      (current) => {
+        expect(() => nextVersion(current, "patch")).toThrow(
+          "a release needs a plain X.Y.Z version",
+        );
+      },
+    );
   });
 
   describe("a release", () => {
@@ -175,6 +206,21 @@ describe("release", () => {
       git(work, "add", "-A");
       git(work, "commit", "--quiet", "-m", "chore: local");
       await expect(release(options("patch"))).rejects.toThrow("1 commit(s) ahead of origin/master");
+    });
+
+    it("a version in package.json that is not a plain X.Y.Z, without changing anything", async () => {
+      writeFileSync(
+        join(work, "package.json"),
+        `${JSON.stringify({ name: "site", version: "3.0.0-rc.1" })}\n`,
+      );
+      git(work, "commit", "--quiet", "--all", "-m", "chore: rc");
+      git(work, "push", "--quiet", "origin", "master");
+      const before = git(work, "rev-parse", "HEAD");
+      await expect(release(options("patch"))).rejects.toThrow(
+        "a release needs a plain X.Y.Z version",
+      );
+      expect(git(work, "rev-parse", "HEAD")).toBe(before);
+      expect(git(work, "tag", "--list")).toBe("");
     });
 
     it("a tag that exists here", async () => {

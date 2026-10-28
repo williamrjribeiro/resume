@@ -12,10 +12,15 @@
  *   bun run release:major              1.2.3 → 2.0.0
  *   bun scripts/release.ts patch --dry-run   checks everything and says what it would do
  *
+ * The next version is worked out here and given to `bun pm version` exactly (`bun pm version 3.0.1`), not
+ * as `patch`. Bun's own `--dry-run` is not in every Bun version: 1.4.3 ignores it and bumps for real.
+ *
  * It refuses to run unless it can release exactly what is on the remote branch: on that branch, with a
  * clean tree, in sync with the remote, and without a tag of that name there. If the bump or the push
  * fails, it puts the repository back as it was. The commit goes through the git hooks like any other.
  */
+
+import { join } from "node:path";
 
 export const BUMPS = ["patch", "minor", "major"] as const;
 export type Bump = (typeof BUMPS)[number];
@@ -47,6 +52,20 @@ export type ReleaseResult = {
 type Output = { readonly code: number; readonly stdout: string; readonly stderr: string };
 
 const isBump = (value: string | undefined): value is Bump => BUMPS.some((bump) => bump === value);
+
+/** The version after `current`, for a plain `X.Y.Z` version: `3.0.0` is `3.0.1`, `3.1.0` or `4.0.0`. */
+export const nextVersion = (current: string, bump: Bump): string => {
+  const match = /^(\d+)\.(\d+)\.(\d+)$/.exec(current);
+  if (match === null) {
+    throw new ReleaseError(
+      `The version in package.json is "${current}"; a release needs a plain X.Y.Z version.`,
+    );
+  }
+  const [major = 0, minor = 0, patch = 0] = match.slice(1).map(Number);
+  if (bump === "major") return `${major + 1}.0.0`;
+  if (bump === "minor") return `${major}.${minor + 1}.0`;
+  return `${major}.${minor}.${patch + 1}`;
+};
 
 /** `https://github.com/owner/repo.git` or `git@github.com:owner/repo.git` → `owner/repo` */
 export const repositoryOf = (remoteUrl: string): string | undefined =>
@@ -120,13 +139,13 @@ export const release = async ({
     );
   }
 
-  const planned = await bun("pm", "version", bump, "--dry-run");
-  const version = /(\d+\.\d+\.\d+[^\s]*)\s*$/.exec(planned.stdout)?.[1];
-  if (planned.code !== 0 || version === undefined) {
-    throw new ReleaseError(
-      `Could not work out the next version:\n${planned.stderr || planned.stdout}`,
-    );
-  }
+  const readVersion = async (): Promise<string> => {
+    const manifest = JSON.parse(await Bun.file(join(directory, "package.json")).text()) as {
+      version?: unknown;
+    };
+    return typeof manifest.version === "string" ? manifest.version : "";
+  };
+  const version = nextVersion(await readVersion(), bump);
   const tag = `v${version}`;
 
   if ((await git("tag", "--list", tag)).stdout !== "") {
@@ -147,11 +166,21 @@ export const release = async ({
     await git("reset", "--hard", before);
   };
 
-  const bumped = await bun("pm", "version", bump, "--message", "chore(release): v%s");
+  const bumped = await bun("pm", "version", version, "--message", "chore(release): v%s");
   if (bumped.code !== 0) {
     await rollback();
     throw new ReleaseError(
       `Could not bump the version, nothing was changed:\n${bumped.stderr || bumped.stdout}`,
+    );
+  }
+  // Trust, but check what Bun wrote: the tag is what gets deployed.
+  const written = await readVersion();
+  const tagged = (await git("rev-parse", "--verify", "--quiet", `refs/tags/${tag}^{commit}`))
+    .stdout;
+  if (written !== version || tagged !== (await git("rev-parse", "HEAD")).stdout) {
+    await rollback();
+    throw new ReleaseError(
+      `Bun did not make the commit and the tag ${tag} as expected (package.json says "${written}"), so nothing was changed.`,
     );
   }
 
