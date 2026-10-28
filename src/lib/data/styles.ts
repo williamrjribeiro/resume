@@ -11,4 +11,5 @@ export const writingStyles: ReadonlyArray<WritingStyle> = [
   { id: "corporate-communication", label: "Corporate communication" },
   { id: "google-dev-docs", label: "Google developer docs" },
   { id: "gov-uk", label: "GOV.UK" },
+  { id: "jack-sparrow", label: "Jack Sparrow" },
 ];
