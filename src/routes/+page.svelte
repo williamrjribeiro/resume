@@ -11,6 +11,7 @@
   import { writingStyles } from "#lib/data/styles.ts";
   import { applyStyle, fetchStyle, originalStyle, type StyledResume } from "#lib/styles.ts";
   import { applyTheme } from "#lib/theme.ts";
+  import { trustedHtml } from "#lib/trusted-html.ts";
   import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
   import { onMount } from "svelte";
@@ -129,7 +130,7 @@
           class="lead p-summary e-content markdown max-w-[60ch] text-xl leading-normal font-light md:text-2xl print:max-w-none print:text-[1.05rem] print:leading-snug print:font-normal print:[&_i]:text-gray-dark"
         >
           <!-- The Markdown comes from src/content, which the site owner writes. -->
-          {@html resume.introduction.html}
+          {@html trustedHtml(resume.introduction.html)}
         </div>
       </Section>
 
@@ -189,7 +190,7 @@
 
       <Section id="section-gap-year" title={resume.gapYear.title} class="print:hidden">
         <div class="e-content markdown">
-          {@html resume.gapYear.html}
+          {@html trustedHtml(resume.gapYear.html)}
         </div>
       </Section>
     </div>

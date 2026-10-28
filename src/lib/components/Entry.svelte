@@ -2,6 +2,7 @@
   import type { Entry } from "#lib/content.ts";
   import { formatMonthYear } from "#lib/format.ts";
   import { strings } from "#lib/data/site.ts";
+  import { trustedHtml } from "#lib/trusted-html.ts";
 
   interface Props {
     entry: Entry;
@@ -77,7 +78,7 @@
   {#if entry.html}
     <div class="p-summary e-content markdown max-w-[60ch] print:max-w-none">
       <!-- The Markdown comes from src/content, which the site owner writes. -->
-      {@html entry.html}
+      {@html trustedHtml(entry.html)}
     </div>
   {/if}
 </article>

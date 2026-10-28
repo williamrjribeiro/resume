@@ -21,8 +21,11 @@ page is hardened. `bun run lighthouse` fails on any finding.
   the hashes of the one inline script and the one inline style it writes into each page, and puts the
   policy in a `<meta>` tag, which works on any host. It applies to `vite build` only: the dev server injects
   inline scripts of its own.
-- **Trusted Types.** The policy says strings may reach DOM script sinks only through the policy
-  `svelte-trusted-html`, which Svelte creates for the HTML it builds from its templates.
+- **Trusted Types.** The policy says strings may reach DOM script sinks only through two policies:
+  `svelte-trusted-html`, which Svelte creates for the HTML it builds from its templates, and
+  `resume-content` ([src/lib/trusted-html.ts](../src/lib/trusted-html.ts)), for the résumé's text. A writing
+  style's HTML is downloaded and swapped in with `{@html}`, which sets `innerHTML`, and the browser refuses
+  that for a plain string. Every `{@html}` of the résumé's text goes through `trustedHtml`.
 - **The fallback.** After the build, `scripts/harden-csp.ts` adds `'unsafe-inline'` to `script-src`. Browsers
   that know hashes ignore it, as long as a hash is in the same directive; browsers too old to know them would
   otherwise show a blank page. SvelteKit adds no hashes to a directive that has the keyword, so this has to

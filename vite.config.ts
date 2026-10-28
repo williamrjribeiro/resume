@@ -43,10 +43,11 @@ export default defineConfig(({ command }) => ({
             "base-uri": ["none"],
             "form-action": ["none"],
             "object-src": ["none"],
-            // Strings may reach DOM script sinks only through the policy Svelte creates for the HTML
-            // it builds from its own templates.
+            // Strings may reach DOM script sinks only through two policies: the one Svelte creates for the
+            // HTML it builds from its own templates, and `resume-content` (src/lib/trusted-html.ts), for the
+            // résumé's text that the page swaps in when the visitor picks a writing style.
             "require-trusted-types-for": ["script"],
-            "trusted-types": ["svelte-trusted-html"],
+            "trusted-types": ["svelte-trusted-html", "resume-content"],
           },
         },
       }),
