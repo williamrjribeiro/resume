@@ -17,4 +17,5 @@ export const writingStyles: ReadonlyArray<WritingStyle> = [
   { id: "paddington", label: "Paddington" },
   { id: "plain-language", label: "Plain language" },
   { id: "scott-adams", label: "Scott Adams" },
+  { id: "shrek", label: "Shrek" },
 ];
