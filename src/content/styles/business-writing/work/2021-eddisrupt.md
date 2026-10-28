@@ -1,0 +1,1 @@
+I promote Eddisrupt's mission to disrupt the education sector with high-quality learning materials and mentoring programs at an accessible price. I produce content about software engineering: blog posts, presentations, and workshops. I also mentor students as they become software engineers and apply for their first jobs in the industry.
