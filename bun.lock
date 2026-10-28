@@ -9,7 +9,7 @@
         "@sveltejs/kit": "^3.1.0",
         "@sveltejs/vite-plugin-svelte": "^7.3.1",
         "@tailwindcss/vite": "4.3.3",
-        "@types/bun": "latest",
+        "@types/bun": "1.4.4",
         "agent-browser": "0.38.2",
         "csp_evaluator": "1.1.8",
         "lefthook": "2.1.17",

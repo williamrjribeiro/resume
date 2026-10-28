@@ -61,5 +61,7 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version-file: .bun-version
+      - name: Check the Bun version
+        run: test "$(bun --version)" = "$(cat .bun-version)"
       - name: Check commit subjects
         run: bun scripts/check-commit-subject.ts --range "origin/${{ github.base_ref || 'master' }}..HEAD"

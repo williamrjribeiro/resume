@@ -14,7 +14,12 @@
   "imports": {
     "#lib/*": "./src/lib/*"
   },
+  "packageManager": "bun@1.4.4",
+  "engines": {
+    "bun": "1.4.4"
+  },
   "scripts": {
+    "preinstall": "bun scripts/check-bun-version.ts",
     "prepare": "bun --bun svelte-kit sync && bun scripts/install-git-hooks.ts",
     "postinstall": "bun scripts/vendor-repos.ts",
     "vendor": "bun scripts/vendor-repos.ts",
@@ -42,14 +47,14 @@
     "md:fmt:check": "rumdl fmt --check .",
     "fmt:check": "bun run --parallel --workspaces --if-present fmt:check && oxfmt --check scripts src test vite.config.ts",
     "verify": "bun run --parallel --no-exit-on-error fmt:check lint md:check md:fmt:check typecheck test",
-    "ci": "bun run --parallel --no-exit-on-error verify build"
+    "ci": "bun run verify && bun run build"
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "^4.0.0",
     "@sveltejs/kit": "^3.1.0",
     "@sveltejs/vite-plugin-svelte": "^7.3.1",
     "@tailwindcss/vite": "4.3.3",
-    "@types/bun": "latest",
+    "@types/bun": "1.4.4",
     "agent-browser": "0.38.2",
     "csp_evaluator": "1.1.8",
     "lefthook": "2.1.17",

@@ -6,7 +6,7 @@ The markup carries the [h-card microformat](https://microformats.org/wiki/h-card
 
 ## Develop
 
-Install [Bun](https://bun.com/docs/installation) at the version in `.bun-version`, then:
+Only Bun 1.4.4 is used, everywhere: the version is in `.bun-version`, which the GitHub workflows read too. `package.json` repeats it (`packageManager`, `engines.bun`, `@types/bun`), and `bun install`, `bun test` and `bun run release:*` refuse to run under another Bun. Install [Bun 1.4.4](https://bun.com/docs/installation), then:
 
 ```bash
 bun install

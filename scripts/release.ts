@@ -21,6 +21,7 @@
  */
 
 import { join } from "node:path";
+import { bunVersionProblems, readBunVersionSources } from "./check-bun-version.ts";
 
 export const BUMPS = ["patch", "minor", "major"] as const;
 export type Bump = (typeof BUMPS)[number];
@@ -207,6 +208,8 @@ if (import.meta.main) {
   const directory = Bun.fileURLToPath(new URL("..", import.meta.url)).replace(/\/$/, "");
 
   try {
+    const wrongBun = bunVersionProblems(await readBunVersionSources(directory));
+    if (wrongBun.length > 0) throw new ReleaseError(wrongBun.join("\n"));
     if (!isBump(bump)) {
       throw new ReleaseError(`Usage: bun run release:<${BUMPS.join("|")}> [--dry-run]`);
     }

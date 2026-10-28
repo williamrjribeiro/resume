@@ -37,6 +37,8 @@ Do not invent new apps or packages unless asked.
 
 Do not introduce npm, yarn, or pnpm.
 
+Only one Bun version is used: the one in `.bun-version` (1.4.4). `package.json` (`packageManager`, `engines.bun`, exact `@types/bun`) must repeat it; `scripts/check-bun-version.ts` enforces that on `bun install` (preinstall), in `bun test`, in `release:*` and in the workflows. To change the version, change all of them together.
+
 ```bash
 bun install
 bun run verify         # pre-commit gates in parallel
