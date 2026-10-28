@@ -24,6 +24,7 @@ export const strings = {
     appStore: "Store",
     scrollToTop: "Scroll to top",
     writingStyle: "Writing style",
+    inStyleOf: "In the style of",
     styleLoading: "Rewriting the résumé…",
     styleFailed: "That style could not be loaded, so the original stays.",
   },

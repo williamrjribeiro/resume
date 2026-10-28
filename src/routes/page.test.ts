@@ -112,6 +112,7 @@ describe("the page", () => {
 
     it("keeps the picker out of the printed résumé", () => {
       expect(body).toMatch(/<div class="[^"]*print:hidden[^"]*">\s*<label for="writing-style"/);
+      expect(body).not.toContain(strings.labels.inStyleOf);
     });
   });
 

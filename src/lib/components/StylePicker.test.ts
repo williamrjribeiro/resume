@@ -43,7 +43,18 @@ describe("StylePicker", () => {
     expect(render()).not.toContain(strings.labels.styleLoading);
   });
 
-  it("stays out of the printed résumé", () => {
-    expect(render()).toContain("print:hidden");
+  it("keeps the drop-down out of the printed résumé", () => {
+    expect(render()).toMatch(/<div class="[^"]*print:hidden[^"]*">\s*<label for="writing-style"/);
+  });
+
+  it("prints the name of the style instead of the drop-down", () => {
+    const printed = render({ value: "yoda" });
+    expect(printed).toMatch(
+      /<p class="hidden[^"]*print:block[^"]*">\s*In the style of\s+Yoda\s*<\/p>/,
+    );
+  });
+
+  it("prints nothing about the style while the original is showing", () => {
+    expect(render()).not.toContain(strings.labels.inStyleOf);
   });
 });
