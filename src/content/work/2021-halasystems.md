@@ -4,6 +4,7 @@ organization: Hala Systems Inc.
 organizationUrl: https://www.halasystems.com/
 location: Lisbon, PT
 start: 2021-09-01
+end: 2026-04-01
 ---
 
 <b>Engineering Leadership:</b> Promoted to Principal Engineer and became the unofficial tech lead of one of the product teams. Led cross-functional teams while establishing the technical vision for secure web applications. Besides my daily individual contributions to the front-end and back-end codebases, I was responsible for many other initiatives: defining the engineering culture, making technical stack decisions, maintaining excellence across teams, shaping the technical parts of the hiring process, mentoring, and more.
