@@ -1,0 +1,1 @@
+Hexkit writes REST APIs for you. It is a contract-driven generator of production-ready TypeScript REST API applications. Generated projects follow Ports & Adapters. They use OpenAPI 3.1, Zod, Hono, Drizzle ORM, and PostgreSQL. It was spec-first: an RFC and a PRD before code. Then a 90% coverage gate.

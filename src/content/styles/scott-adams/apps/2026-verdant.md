@@ -1,0 +1,1 @@
+Verdant grades AI agents. It is a Tessl workspace for evaluating AI agent skills. Two skill packages teach agents when to use Git worktrees and when to use stacked pull requests. Nine levelled eval scenarios score the skills against a fixture repository. They have weighted rubrics, blocking failures, and adversarial cases.
